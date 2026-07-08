@@ -164,7 +164,7 @@ export default function QuizForm() {
       : answers["site"] ?? "";
     const displayAnswers = { ...answers, site: siteInfo };
     const msg = encodeURIComponent(
-      `Olá! Acabei de preencher o questionário da wehelpflow.\n\nNome: ${contact.nome}\nWhatsApp: ${contact.whatsapp}\nE-mail: ${contact.email}\n\nRespostas:\n${Object.entries(displayAnswers).map(([, v]) => `• ${Array.isArray(v) ? v.join(", ") : v}`).join("\n")}`
+      `Olá! Acabei de preencher o questionário da WWW.\n\nNome: ${contact.nome}\nWhatsApp: ${contact.whatsapp}\nE-mail: ${contact.email}\n\nRespostas:\n${Object.entries(displayAnswers).map(([, v]) => `• ${Array.isArray(v) ? v.join(", ") : v}`).join("\n")}`
     );
     window.open(`https://wa.me/5551999999999?text=${msg}`, "_blank");
     setDone(true);

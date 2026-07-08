@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import { useLang } from "@/lib/i18n/context";
 
 const containerStyle = {
@@ -15,37 +15,13 @@ const containerStyle = {
 
 export default function Hero() {
   const { lang } = useLang();
-  const { scrollY } = useScroll();
-  const bgY = useTransform(scrollY, [0, 900], [0, 200]);
-
   const _ = (en: string, pt: string) => lang === "en" ? en : pt;
 
   return (
-    <section className="relative min-h-screen flex flex-col overflow-hidden">
-      {/* ── Background photo with parallax ── */}
-      <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
-        <motion.img
-          src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1920&auto=format&fit=crop&q=80"
-          alt=""
-          style={{
-            position: "absolute",
-            top: "-12%",
-            left: 0,
-            width: "100%",
-            height: "124%",
-            objectFit: "cover",
-            objectPosition: "center",
-            y: bgY,
-          }}
-        />
-        {/* Dark gradient overlay — stronger at top/bottom for readability */}
-        <div style={{
-          position: "absolute", inset: 0,
-          background: "linear-gradient(to bottom, rgba(13,12,10,0.62) 0%, rgba(13,12,10,0.42) 45%, rgba(13,12,10,0.72) 100%)",
-        }} />
-      </div>
-
-      {/* ── Content ── */}
+    <section
+      className="relative min-h-screen flex flex-col overflow-hidden"
+      style={{ background: "var(--navy)" }}
+    >
       <div
         className="relative z-10 flex-1 flex flex-col justify-center"
         style={{ ...containerStyle, paddingTop: "calc(5rem + 73px)", paddingBottom: "5rem" }}
@@ -67,11 +43,11 @@ export default function Hero() {
           className="font-black text-white"
           style={{
             fontFamily: "var(--font-bricolage)",
-            fontSize: "clamp(3rem, 9.5vw, 6.5rem)",
+            fontSize: "clamp(2.8rem, 7vw, 4.8rem)",
             lineHeight: 0.96,
             letterSpacing: "-0.01em",
             textTransform: "uppercase",
-            maxWidth: "18ch",
+            maxWidth: "22ch",
           }}
         >
           {lang === "en"
@@ -86,8 +62,8 @@ export default function Hero() {
           style={{ fontSize: "clamp(1rem, 1.8vw, 1.15rem)", maxWidth: "42ch", marginTop: "2.25rem", lineHeight: 1.65, color: "rgba(255,255,255,0.78)" }}
         >
           {_(
-            "wehelpflow plugs straightforward AI automation into the business you already have — your site, your inbox, your billing, your WhatsApp — so the parts that don't need you finally stop needing you.",
-            "A wehelpflow encaixa automação com IA direto no negócio que você já tem — site, e-mail, cobrança, WhatsApp — pra que as partes que não precisam de você parem de precisar de você."
+            "We plug straightforward AI automation into the business you already have — your site, your inbox, your billing, your WhatsApp — so the parts that don't need you finally stop needing you.",
+            "A gente encaixa automação com IA direto no negócio que você já tem — site, e-mail, cobrança, WhatsApp — pra que as partes que não precisam de você parem de precisar de você."
           )}
         </motion.p>
 
@@ -99,7 +75,7 @@ export default function Hero() {
         >
           <a
             href="#services"
-            className="inline-flex items-center justify-center font-bold rounded-full text-white transition-all hover:opacity-90 active:scale-[0.97] whitespace-nowrap uppercase"
+            className="inline-flex items-center justify-center font-bold rounded-full transition-all hover:opacity-90 active:scale-[0.97] whitespace-nowrap uppercase"
             style={{ fontSize: "0.88rem", letterSpacing: "0.06em", padding: "1rem 2.5rem", background: "var(--indigo)", color: "var(--navy)", boxShadow: "0 6px 28px rgba(241,182,201,0.55)" }}
           >
             {_("See the 6 things we automate", "Veja o que automatizamos")}

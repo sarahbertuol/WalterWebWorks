@@ -17,7 +17,7 @@ export default function InstitucionalBlock() {
     <section className="bg-[var(--navy)] min-h-screen flex flex-col justify-center overflow-hidden relative">
       <div
         className="absolute -top-40 -right-40 w-[500px] h-[500px] rounded-full pointer-events-none"
-        style={{ background: "radial-gradient(ellipse at center, rgba(67,97,238,0.15) 0%, transparent 70%)", filter: "blur(60px)" }}
+        style={{ background: "radial-gradient(ellipse at center, rgba(241,182,201,0.2) 0%, transparent 70%)", filter: "blur(60px)" }}
         aria-hidden="true"
       />
 
@@ -45,9 +45,9 @@ export default function InstitucionalBlock() {
           <Link
             href="/sobre"
             className="inline-flex items-center justify-center text-sm font-semibold px-8 py-4 rounded-full text-[var(--navy)] hover:opacity-90 transition-all active:scale-[0.97]"
-            style={{ background: "linear-gradient(135deg, var(--saffron), var(--saffron-2))", boxShadow: "0 4px 18px rgba(245,166,35,0.35)" }}
+            style={{ background: "linear-gradient(135deg, var(--saffron), var(--saffron-2))", boxShadow: "0 4px 18px rgba(241,182,201,0.5)" }}
           >
-            Conheça a wehelpflow →
+            Conheça a gente →
           </Link>
         </motion.div>
 

@@ -26,10 +26,10 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "wehelpflow — AI automation for small businesses",
-  description: "wehelpflow plugs straightforward AI automation into the business you already run — website, inbox, billing, clients, WhatsApp — live in days, no new tools to learn.",
+  title: "WWW — AI automation for small businesses",
+  description: "We plug straightforward AI automation into the business you already run — website, inbox, billing, clients, WhatsApp — live in days, no new tools to learn.",
   openGraph: {
-    title: "wehelpflow",
+    title: "WWW — walter.web.works",
     description: "Stop running your business by hand.",
     type: "website",
   },

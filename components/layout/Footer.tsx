@@ -12,8 +12,8 @@ export default function Footer() {
     >
       <p style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.4)" }}>
         {lang === "en"
-          ? "© 2026 wehelpflow. Automation with a human still in charge."
-          : "© 2026 wehelpflow. Automação com um humano ainda no comando."}
+          ? "© 2026 WWW. Automation with a human still in charge."
+          : "© 2026 WWW. Automação com um humano ainda no comando."}
       </p>
     </footer>
   );

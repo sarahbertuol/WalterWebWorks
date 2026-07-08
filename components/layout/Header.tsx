@@ -28,14 +28,19 @@ export default function Header() {
         borderBottom: scrolled ? "1px solid var(--border)" : "none",
       }}
     >
-      <Link href="/" className="flex items-baseline gap-0.5 group">
+      <Link href="/" className="flex items-center gap-2.5 group" aria-label="Página inicial">
+        <svg width="26" height="23" viewBox="0 0 200 180" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="40" cy="58" r="16" fill="#F1B6C9"/>
+          <circle cx="100" cy="76" r="16" fill="#F1B6C9"/>
+          <circle cx="160" cy="58" r="16" fill="#F1B6C9"/>
+          <path d="M40,58 L70,138 L100,76 L130,138 L160,58" fill="none" stroke={isLight ? "#24402F" : "white"} strokeWidth="17" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
         <span
-          className="font-black tracking-[-0.025em] transition-colors"
-          style={{ fontFamily: "var(--font-mono)", fontWeight: 800, fontSize: "1.1rem", letterSpacing: "-0.01em", color: isLight ? "var(--navy)" : "white" }}
+          className="hidden sm:block font-black transition-colors"
+          style={{ fontFamily: "var(--font-mono)", fontSize: "0.88rem", color: isLight ? "var(--navy)" : "white" }}
         >
-          wehelpflow
+          &lt;walter<span style={{ color: "var(--indigo)" }}>.</span>web<span style={{ color: "var(--indigo)" }}>.</span>works/&gt;
         </span>
-        <span className="w-[0.3rem] h-[0.3rem] rounded-full bg-[var(--saffron)] mb-0.5 transition-transform group-hover:scale-125" />
       </Link>
 
       <div className="flex items-center gap-5">
