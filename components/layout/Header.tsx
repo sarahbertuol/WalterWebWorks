@@ -22,7 +22,7 @@ export default function Header() {
       style={{
         padding: "1.25rem clamp(1.5rem, 6vw, 6rem)",
         background: scrolled
-          ? "rgba(240,237,231,0.92)"
+          ? "rgba(245,239,226,0.92)"
           : "linear-gradient(to bottom, rgba(13,12,10,0.52) 0%, transparent 100%)",
         backdropFilter: scrolled ? "blur(12px)" : "none",
         borderBottom: scrolled ? "1px solid var(--border)" : "none",
@@ -31,7 +31,7 @@ export default function Header() {
       <Link href="/" className="flex items-baseline gap-0.5 group">
         <span
           className="font-black tracking-[-0.025em] transition-colors"
-          style={{ fontFamily: "var(--font-bricolage)", fontSize: "1.2rem", color: isLight ? "var(--navy)" : "white" }}
+          style={{ fontFamily: "var(--font-mono)", fontWeight: 800, fontSize: "1.1rem", letterSpacing: "-0.01em", color: isLight ? "var(--navy)" : "white" }}
         >
           wehelpflow
         </span>

@@ -21,8 +21,8 @@ export default function FullWidthCTA() {
         loading="lazy"
         style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.22 }}
       />
-      {/* Vignette overlay — darker edges, lighter center */}
-      <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse at center, rgba(13,12,10,0.55) 0%, rgba(13,12,10,0.88) 100%)" }} />
+      {/* Vignette overlay */}
+      <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse at center, rgba(20,40,24,0.5) 0%, rgba(20,40,24,0.92) 100%)" }} />
 
       <div className="relative z-10" style={{ maxWidth: "820px", width: "100%", display: "flex", flexDirection: "column", alignItems: "center", gap: "3rem" }}>
         <motion.span
@@ -58,7 +58,7 @@ export default function FullWidthCTA() {
           <Link
             href="/contato"
             className="inline-flex items-center justify-center font-bold rounded-full uppercase hover:opacity-90 transition-all active:scale-[0.97]"
-            style={{ fontSize: "0.95rem", letterSpacing: "0.07em", padding: "1.15rem 3.5rem", background: "var(--indigo)", color: "white", boxShadow: "0 8px 40px rgba(249,115,22,0.45)" }}
+            style={{ fontSize: "0.95rem", letterSpacing: "0.07em", padding: "1.15rem 3.5rem", background: "var(--indigo)", color: "var(--navy)", boxShadow: "0 8px 40px rgba(241,182,201,0.55)" }}
           >
             {_("Start the conversation →", "Começar conversa →")}
           </Link>

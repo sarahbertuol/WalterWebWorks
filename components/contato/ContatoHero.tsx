@@ -15,7 +15,7 @@ export default function ContatoHero() {
           className="blob-1 absolute rounded-full"
           style={{
             width: 640, height: 580, top: -160, right: -100,
-            background: "radial-gradient(ellipse at center, rgba(249,115,22,0.18) 0%, rgba(255,154,60,0.07) 45%, transparent 72%)",
+            background: "radial-gradient(ellipse at center, rgba(241,182,201,0.28) 0%, rgba(241,182,201,0.08) 45%, transparent 72%)",
             filter: "blur(70px)",
           }}
         />
@@ -23,7 +23,7 @@ export default function ContatoHero() {
           className="blob-2 absolute rounded-full"
           style={{
             width: 500, height: 450, bottom: -120, left: -80,
-            background: "radial-gradient(ellipse at center, rgba(245,166,35,0.25) 0%, rgba(255,209,102,0.1) 45%, transparent 72%)",
+            background: "radial-gradient(ellipse at center, rgba(241,182,201,0.22) 0%, rgba(241,182,201,0.07) 45%, transparent 72%)",
             filter: "blur(60px)",
           }}
         />

@@ -1,13 +1,20 @@
 import type { Metadata } from "next";
-import { Barlow, Inter } from "next/font/google";
+import { Fraunces, JetBrains_Mono, Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import Providers from "@/components/layout/Providers";
 
-const barlow = Barlow({
+const fraunces = Fraunces({
   variable: "--font-bricolage",
-  weight: ["400", "500", "700", "800", "900"],
+  weight: ["400", "600", "700", "900"],
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-mono",
+  weight: ["400", "500", "700", "800"],
   subsets: ["latin"],
   display: "swap",
 });
@@ -30,7 +37,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="pt" className={`${barlow.variable} ${inter.variable}`}>
+    <html lang="pt" className={`${fraunces.variable} ${jetbrainsMono.variable} ${inter.variable}`}>
       <body className="min-h-screen flex flex-col">
         <Providers>
           <Header />

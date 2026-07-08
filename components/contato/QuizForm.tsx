@@ -285,7 +285,7 @@ export default function QuizForm() {
                       padding: "0.85rem 1.1rem",
                       borderRadius: "0.875rem",
                       border: `2px solid ${selected ? "var(--indigo)" : "var(--border)"}`,
-                      background: selected ? "rgba(67,97,238,0.08)" : "var(--bg-card)",
+                      background: selected ? "rgba(241,182,201,0.18)" : "var(--bg-card)",
                       color: selected ? "var(--indigo)" : "var(--text-mid)",
                       fontWeight: 600,
                       fontSize: "0.88rem",
@@ -320,7 +320,7 @@ export default function QuizForm() {
                         padding: "0.85rem 1.1rem",
                         borderRadius: "0.875rem",
                         border: `2px solid ${selected ? "var(--indigo)" : "var(--border)"}`,
-                        background: selected ? "rgba(67,97,238,0.08)" : "var(--bg-card)",
+                        background: selected ? "rgba(241,182,201,0.18)" : "var(--bg-card)",
                         color: selected ? "var(--indigo)" : "var(--text-mid)",
                         fontWeight: 600,
                         fontSize: "0.88rem",
@@ -381,7 +381,7 @@ export default function QuizForm() {
                       fontSize: "0.95rem",
                       cursor: "pointer",
                       border: "none",
-                      boxShadow: "0 4px 20px rgba(67,97,238,0.3)",
+                      boxShadow: "0 4px 20px rgba(241,182,201,0.5)",
                     }}
                   >
                     Próximo →
@@ -408,7 +408,7 @@ export default function QuizForm() {
                         padding: "0.85rem 1.1rem",
                         borderRadius: "0.875rem",
                         border: `2px solid ${selected ? "var(--indigo)" : "var(--border)"}`,
-                        background: selected ? "rgba(67,97,238,0.08)" : "var(--bg-card)",
+                        background: selected ? "rgba(241,182,201,0.18)" : "var(--bg-card)",
                         color: selected ? "var(--indigo)" : "var(--text-mid)",
                         fontWeight: 600,
                         fontSize: "0.88rem",

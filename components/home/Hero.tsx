@@ -100,7 +100,7 @@ export default function Hero() {
           <a
             href="#services"
             className="inline-flex items-center justify-center font-bold rounded-full text-white transition-all hover:opacity-90 active:scale-[0.97] whitespace-nowrap uppercase"
-            style={{ fontSize: "0.88rem", letterSpacing: "0.06em", padding: "1rem 2.5rem", background: "var(--indigo)", boxShadow: "0 6px 28px rgba(249,115,22,0.45)" }}
+            style={{ fontSize: "0.88rem", letterSpacing: "0.06em", padding: "1rem 2.5rem", background: "var(--indigo)", color: "var(--navy)", boxShadow: "0 6px 28px rgba(241,182,201,0.55)" }}
           >
             {_("See the 6 things we automate", "Veja o que automatizamos")}
           </a>
