@@ -37,63 +37,18 @@
   --font-mono:        var(--font-mono);
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: var(--font-inter), sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* Base overrides — inside @layer so Tailwind utility classes keep priority */
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: #F5EFE2;
+    color: #1B2E20;
+    font-family: var(--font-inter), sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 }
-
-body::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-  background-size: 200px 200px;
-  opacity: 0.025;
-  pointer-events: none;
-  z-index: 9999;
-  mix-blend-mode: multiply;
-}
-
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
-}
-.animate-marquee { animation: marquee 22s linear infinite; }
-.group:hover .animate-marquee { animation-play-state: paused; }
-
-@keyframes float1 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50%       { transform: translate(20px, -30px) scale(1.04); }
-}
-@keyframes float2 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50%       { transform: translate(-16px, 24px) scale(0.96); }
-}
-@keyframes float3 {
-  0%, 100% { transform: translate(0, 0); }
-  33%       { transform: translate(24px, 10px); }
-  66%       { transform: translate(-10px, -20px); }
-}
-@keyframes float4 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50%       { transform: translate(-18px, -22px) scale(1.06); }
-}
-.blob-1 { animation: float1 14s ease-in-out infinite; }
-.blob-2 { animation: float2 17s ease-in-out infinite; }
-.blob-3 { animation: float3 20s ease-in-out infinite; }
-.blob-4 { animation: float4 22s ease-in-out infinite; }
-
-@keyframes pulse-dot {
-  0%, 100% { opacity: 0.6; transform: scale(1); }
-  50%       { opacity: 1;   transform: scale(1.2); }
-}
-.animate-pulse-dot { animation: pulse-dot 2s ease-in-out infinite; }
 
 @media (prefers-reduced-motion: reduce) {
   *,
