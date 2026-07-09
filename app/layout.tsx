@@ -1,13 +1,11 @@
 import type { Metadata } from "next";
 import { Fraunces, JetBrains_Mono, Inter } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
-import Providers from "@/components/layout/Providers";
 
 const fraunces = Fraunces({
   variable: "--font-bricolage",
-  weight: ["400", "600", "700", "900"],
+  weight: ["400", "500", "600", "700", "900"],
+  style: ["normal", "italic"],
   subsets: ["latin"],
   display: "swap",
 });
@@ -26,25 +24,23 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "WWW — AI automation for small businesses",
-  description: "We plug straightforward AI automation into the business you already run — website, inbox, billing, clients, WhatsApp — live in days, no new tools to learn.",
+  title: "Walter Web Works — Site pronto. Rápido.",
+  description:
+    "A Walter Web Works cria seu site em dias e conecta IA para tirar tarefa repetitiva da sua mão.",
   openGraph: {
-    title: "WWW — walter.web.works",
-    description: "Stop running your business by hand.",
+    title: "Walter Web Works — Site pronto. Rápido.",
+    description: "Site no ar em dias. Automação IA encaixada no seu negócio.",
     type: "website",
   },
 };
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="pt" className={`${fraunces.variable} ${jetbrainsMono.variable} ${inter.variable}`}>
-      <body className="min-h-screen flex flex-col">
-        <Providers>
-          <Header />
-          <main className="flex-1">{children}</main>
-          <Footer />
-        </Providers>
-      </body>
+    <html
+      lang="pt-BR"
+      className={`${fraunces.variable} ${jetbrainsMono.variable} ${inter.variable}`}
+    >
+      <body>{children}</body>
     </html>
   );
 }

@@ -1,0 +1,12 @@
+<svg width="620" height="120" viewBox="0 0 620 120" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;800&amp;display=swap');
+      .code { font-family: 'JetBrains Mono', 'Space Mono', monospace; font-weight: 500; }
+      .bold { font-weight: 800; }
+    </style>
+  </defs>
+  <text x="310" y="72" text-anchor="middle" class="code" font-size="42" fill="#F5EFE2">
+    <tspan>&lt;walter</tspan><tspan fill="#F1B6C9" font-size="50" font-weight="800">.</tspan><tspan class="bold">web</tspan><tspan fill="#F1B6C9" font-size="50" font-weight="800">.</tspan><tspan>works/&gt;</tspan>
+  </text>
+</svg>

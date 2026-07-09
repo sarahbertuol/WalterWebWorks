@@ -14,19 +14,27 @@
 }
 
 @theme inline {
-  --color-navy:     var(--navy);
-  --color-indigo:   var(--indigo);
-  --color-indigo2:  var(--indigo-2);
-  --color-saffron:  var(--saffron);
-  --color-saffron2: var(--saffron-2);
-  --color-bg:       var(--bg);
-  --color-card:     var(--bg-card);
-  --color-textmid:  var(--text-mid);
-  --color-border:   var(--border);
-  --color-pink:     #F1B6C9;
-  --font-display:   var(--font-bricolage);
-  --font-body:      var(--font-inter);
-  --font-mono:      var(--font-mono);
+  --color-navy:       var(--navy);
+  --color-indigo:     var(--indigo);
+  --color-indigo2:    var(--indigo-2);
+  --color-saffron:    var(--saffron);
+  --color-saffron2:   var(--saffron-2);
+  --color-bg:         var(--bg);
+  --color-card:       var(--bg-card);
+  --color-textmid:    var(--text-mid);
+  --color-border:     var(--border);
+  /* zip brand aliases */
+  --color-green:      #24402F;
+  --color-green-dark: #1B2E20;
+  --color-pink:       #F1B6C9;
+  --color-cream:      #F5EFE2;
+  --color-cream-2:    #EFE7D5;
+  --color-ink:        #1B2E20;
+  --color-white:      #ffffff;
+  --font-display:     var(--font-bricolage);
+  --font-body:        var(--font-inter);
+  --font-sans:        var(--font-inter);
+  --font-mono:        var(--font-mono);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -88,6 +96,28 @@ body::after {
 .animate-pulse-dot { animation: pulse-dot 2s ease-in-out infinite; }
 
 @media (prefers-reduced-motion: reduce) {
-  .blob-1, .blob-2, .blob-3, .blob-4,
-  .animate-marquee, .animate-pulse-dot { animation: none; }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Portfolio slider scroll snap */
+.snap-track {
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+.snap-track > * {
+  scroll-snap-align: start;
+}
+.snap-track::-webkit-scrollbar {
+  height: 6px;
+}
+.snap-track::-webkit-scrollbar-thumb {
+  background: #f1b6c9;
+  border-radius: 999px;
 }

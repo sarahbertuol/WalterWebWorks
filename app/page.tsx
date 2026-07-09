@@ -1,19 +1,38 @@
-import Hero from "@/components/home/Hero";
-import WhoSection from "@/components/home/WhoSection";
-import ServicesGrid from "@/components/home/ServicesGrid";
-import DiffSection from "@/components/home/DiffSection";
-import TeamSection from "@/components/home/TeamSection";
-import FullWidthCTA from "@/components/home/FullWidthCTA";
+"use client";
 
-export default function HomePage() {
+import { useState } from "react";
+import Navbar from "@/components/Navbar";
+import HeroMain from "@/components/HeroMain";
+import ComoFunciona from "@/components/ComoFunciona";
+import Servicos from "@/components/Servicos";
+import QuemSomos from "@/components/QuemSomos";
+import Depoimentos from "@/components/Depoimentos";
+import CTAFinal from "@/components/CTAFinal";
+import OrcamentoModal from "@/components/OrcamentoModal";
+import PortfolioModal from "@/components/PortfolioModal";
+
+export default function Home() {
+  const [orcamentoOpen, setOrcamentoOpen] = useState(false);
+  const [portfolioOpen, setPortfolioOpen] = useState(false);
+
   return (
-    <>
-      <Hero />
-      <WhoSection />
-      <ServicesGrid />
-      <DiffSection />
-      <TeamSection />
-      <FullWidthCTA />
-    </>
+    <main>
+      <Navbar onOpenOrcamento={() => setOrcamentoOpen(true)} />
+      <HeroMain onOpenPortfolio={() => setPortfolioOpen(true)} />
+      <ComoFunciona />
+      <Servicos />
+      <QuemSomos />
+      <Depoimentos />
+      <CTAFinal />
+
+      <OrcamentoModal
+        open={orcamentoOpen}
+        onClose={() => setOrcamentoOpen(false)}
+      />
+      <PortfolioModal
+        open={portfolioOpen}
+        onClose={() => setPortfolioOpen(false)}
+      />
+    </main>
   );
 }
