@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { useLang } from "@/lib/i18n/context";
@@ -13,9 +14,109 @@ const containerStyle = {
   paddingRight: "clamp(1.5rem, 6vw, 6rem)",
 };
 
+function BorderDrawButton({
+  href,
+  children,
+  variant,
+}: {
+  href: string;
+  children: React.ReactNode;
+  variant: "pink" | "outline";
+}) {
+  const [hovered, setHovered] = useState(false);
+  const wrapperRef = useRef<HTMLSpanElement>(null);
+  const [dims, setDims] = useState({ w: 0, h: 0 });
+
+  useEffect(() => {
+    const btn = wrapperRef.current?.firstElementChild as HTMLElement | null;
+    if (btn) setDims({ w: btn.offsetWidth, h: btn.offsetHeight });
+  }, []);
+
+  const isPink = variant === "pink";
+  const r = dims.h / 2;
+  const DASH = 1000;
+
+  const btnStyle: React.CSSProperties = {
+    fontSize: "0.88rem",
+    letterSpacing: "0.06em",
+    padding: "1rem 2.5rem",
+    display: "inline-flex",
+    alignItems: "center",
+    justifyContent: "center",
+    fontWeight: 700,
+    borderRadius: "9999px",
+    textTransform: "uppercase",
+    whiteSpace: "nowrap",
+    transition: "transform 0.1s",
+    cursor: "pointer",
+    textDecoration: "none",
+    ...(isPink
+      ? {
+          background: "var(--indigo)",
+          color: "var(--navy)",
+          boxShadow: "0 6px 28px rgba(241,182,201,0.55)",
+        }
+      : {
+          background: "transparent",
+          color: "white",
+          border: "2px solid rgba(255,255,255,0.7)",
+        }),
+  };
+
+  /* pill path starting from top-center, drawn clockwise */
+  const pillPath =
+    dims.w > 0
+      ? `M ${dims.w / 2},0 L ${dims.w - r},0 A ${r},${r} 0 0 1 ${dims.w},${r} A ${r},${r} 0 0 1 ${dims.w - r},${dims.h} L ${r},${dims.h} A ${r},${r} 0 0 1 0,${r} A ${r},${r} 0 0 1 ${r},0 Z`
+      : "";
+
+  return (
+    <span
+      ref={wrapperRef}
+      style={{ position: "relative", display: "inline-flex" }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      {href.startsWith("/") ? (
+        <Link href={href} style={btnStyle} className="active:scale-[0.97]">
+          {children}
+        </Link>
+      ) : (
+        <a href={href} style={btnStyle} className="active:scale-[0.97]">
+          {children}
+        </a>
+      )}
+      {pillPath && (
+        <svg
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: dims.w,
+            height: dims.h,
+            pointerEvents: "none",
+            overflow: "visible",
+          }}
+          viewBox={`0 0 ${dims.w} ${dims.h}`}
+        >
+          <path
+            d={pillPath}
+            fill="none"
+            stroke={isPink ? "white" : "var(--indigo)"}
+            strokeWidth="2.5"
+            strokeDasharray={DASH}
+            strokeDashoffset={hovered ? 0 : DASH}
+            style={{ transition: "stroke-dashoffset 0.65s cubic-bezier(0.65, 0, 0.35, 1)" }}
+          />
+        </svg>
+      )}
+    </span>
+  );
+}
+
 export default function Hero() {
   const { lang } = useLang();
-  const _ = (en: string, pt: string) => lang === "en" ? en : pt;
+  const _ = (en: string, pt: string) => (lang === "en" ? en : pt);
 
   return (
     <section
@@ -50,16 +151,32 @@ export default function Hero() {
             maxWidth: "22ch",
           }}
         >
-          {lang === "en"
-            ? <>Stop running your<br /><span style={{ color: "var(--indigo)" }}>business</span> by hand.</>
-            : <>Pare de tocar seu<br /><span style={{ color: "var(--indigo)" }}>negócio</span> na mão.</>}
+          {lang === "en" ? (
+            <>
+              Stop running your
+              <br />
+              <span style={{ color: "var(--indigo)" }}>business</span> by hand.
+            </>
+          ) : (
+            <>
+              Pare de tocar seu
+              <br />
+              <span style={{ color: "var(--indigo)" }}>negócio</span> na mão.
+            </>
+          )}
         </motion.h1>
 
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.7, ease: "easeOut" }}
-          style={{ fontSize: "clamp(1rem, 1.8vw, 1.15rem)", maxWidth: "42ch", marginTop: "2.25rem", lineHeight: 1.65, color: "rgba(255,255,255,0.78)" }}
+          style={{
+            fontSize: "clamp(1rem, 1.8vw, 1.15rem)",
+            maxWidth: "42ch",
+            marginTop: "2.25rem",
+            lineHeight: 1.65,
+            color: "rgba(255,255,255,0.78)",
+          }}
         >
           {_(
             "We plug straightforward AI automation into the business you already have — your site, your inbox, your billing, your WhatsApp — so the parts that don't need you finally stop needing you.",
@@ -73,20 +190,12 @@ export default function Hero() {
           transition={{ delay: 0.35, duration: 0.7, ease: "easeOut" }}
           style={{ display: "flex", flexWrap: "wrap", gap: "1rem", marginTop: "3rem" }}
         >
-          <a
-            href="#services"
-            className="inline-flex items-center justify-center font-bold rounded-full transition-all hover:opacity-90 active:scale-[0.97] whitespace-nowrap uppercase"
-            style={{ fontSize: "0.88rem", letterSpacing: "0.06em", padding: "1rem 2.5rem", background: "var(--indigo)", color: "var(--navy)", boxShadow: "0 6px 28px rgba(241,182,201,0.55)" }}
-          >
+          <BorderDrawButton href="#services" variant="pink">
             {_("See the 6 things we automate", "Veja o que automatizamos")}
-          </a>
-          <Link
-            href="/contato"
-            className="inline-flex items-center justify-center font-bold rounded-full text-white hover:bg-white hover:text-[var(--navy)] transition-all active:scale-[0.97] whitespace-nowrap uppercase"
-            style={{ fontSize: "0.88rem", letterSpacing: "0.06em", padding: "1rem 2.5rem", border: "2px solid rgba(255,255,255,0.7)" }}
-          >
+          </BorderDrawButton>
+          <BorderDrawButton href="/contato" variant="outline">
             {_("Talk to a human →", "Falar com um humano →")}
-          </Link>
+          </BorderDrawButton>
         </motion.div>
       </div>
     </section>

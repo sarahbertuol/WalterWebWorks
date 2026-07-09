@@ -29,7 +29,7 @@ export default function Header() {
       }}
     >
       <Link href="/" className="flex items-center gap-2.5 group" aria-label="Página inicial">
-        <svg width="26" height="23" viewBox="0 0 200 180" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <svg width="39" height="35" viewBox="0 0 200 180" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <circle cx="40" cy="58" r="16" fill="#F1B6C9"/>
           <circle cx="100" cy="76" r="16" fill="#F1B6C9"/>
           <circle cx="160" cy="58" r="16" fill="#F1B6C9"/>
@@ -74,7 +74,7 @@ export default function Header() {
             backdropFilter: scrolled ? "none" : "blur(8px)",
           }}
         >
-          {lang === "en" ? "Let's talk" : "Vamos conversar"}
+          {lang === "en" ? "Quick quote" : "Orçamento rápido"}
         </Link>
       </div>
     </header>
