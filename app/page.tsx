@@ -6,6 +6,7 @@ import HeroMain from "@/components/HeroMain";
 import ComoFunciona from "@/components/ComoFunciona";
 import Servicos from "@/components/Servicos";
 import QuemSomos from "@/components/QuemSomos";
+import Sobre from "@/components/Sobre";
 import Depoimentos from "@/components/Depoimentos";
 import CTAFinal from "@/components/CTAFinal";
 import OrcamentoModal from "@/components/OrcamentoModal";
@@ -22,6 +23,7 @@ export default function Home() {
       <ComoFunciona />
       <Servicos />
       <QuemSomos />
+      <Sobre />
       <Depoimentos />
       <CTAFinal />
 
