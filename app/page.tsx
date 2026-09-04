@@ -4,6 +4,7 @@ import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import HeroMain from "@/components/HeroMain";
 import ComoFunciona from "@/components/ComoFunciona";
+import Processo from "@/components/Processo";
 import Servicos from "@/components/Servicos";
 import QuemSomos from "@/components/QuemSomos";
 import Sobre from "@/components/Sobre";
@@ -21,6 +22,7 @@ export default function Home() {
       <Navbar onOpenOrcamento={() => setOrcamentoOpen(true)} />
       <HeroMain onOpenPortfolio={() => setPortfolioOpen(true)} />
       <ComoFunciona />
+      <Processo />
       <Servicos />
       <QuemSomos />
       <Sobre />
