@@ -12,11 +12,12 @@ export const content = {
 
   hero: {
     eyebrow: ["Save", "the Date"],
-    title: "Brunch de Fraldas",
+    title: ["Brunch", "de", "Fraldas"],
     connector: "da",
     name: "Lorena",
     day: "21",
     month: "Novembro",
+    note: "em breve, mais detalhes",
   },
 
   invitation: {

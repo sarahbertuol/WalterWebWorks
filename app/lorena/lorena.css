@@ -5,14 +5,16 @@
 
 .lw {
   /* colour tokens are injected inline from lib/lorena/tokens.ts */
-  --font-display: var(--font-lw-display), "Bodoni Moda", Didot, serif;
+  --font-display: var(--font-lw-body), "Cormorant Garamond", Garamond, serif;
   --font-script: var(--font-lw-script), "Pinyon Script", cursive;
   --font-body: var(--font-lw-body), "Cormorant Garamond", Garamond, serif;
 
   /* sheet */
-  --frame: 26px;          /* visual thickness of the scalloped border */
-  --sc: 9px;              /* scallop radius */
-  --stripe: 15px;         /* width of one stripe */
+  --margin: 9px;          /* ivory paper outside the burgundy border */
+  --band: 7px;            /* solid burgundy band */
+  --sc: 16px;             /* scallop radius — big half-moons, as printed */
+  --frame: calc(var(--margin) + var(--band) + var(--sc)); /* total visual thickness */
+  --stripe: clamp(22px, 2.9vw, 44px); /* width of one stripe */
   --safe: clamp(36px, 6vw, 88px);  /* breathing room inside the frame */
   --max: 1160px;          /* editorial composition width */
   --measure: 34ch;        /* text block width */
@@ -36,9 +38,10 @@
 
 @media (max-width: 720px) {
   .lw {
-    --frame: 16px;
-    --sc: 6px;
-    --stripe: 11px;
+    --margin: 5px;
+    --band: 4px;
+    --sc: 9.5px;
+    --stripe: 18px;
     --safe: 30px;
     --section-y: 104px;
     --illo-scale: 0.8;
@@ -82,8 +85,7 @@
 
 .lw-frame {
   position: fixed;
-  inset: -8px;
-  --bleed: 8px;
+  inset: 0;
   z-index: 50;
   pointer-events: none;
   filter: url(#lw-frame);
@@ -92,48 +94,53 @@
 .lw-frame__edge {
   position: absolute;
   display: block;
-  --scallop: radial-gradient(circle closest-side, var(--burgundy) 94%, transparent 100%);
+  --scallop: radial-gradient(circle closest-side, var(--burgundy) 96%, transparent 100%);
   --solid: linear-gradient(var(--burgundy), var(--burgundy));
+  --paper: linear-gradient(var(--ivory), var(--ivory));
   --tile: calc(var(--sc) * 2);
-  --band: calc(var(--frame) + var(--bleed) - var(--sc));
+  --inner: calc(var(--margin) + var(--band)); /* where the scallops are centred */
 }
 
 .lw-frame__edge--top,
 .lw-frame__edge--bottom {
   left: 0;
   right: 0;
-  height: calc(var(--frame) + var(--bleed));
+  height: var(--frame);
 }
 .lw-frame__edge--top {
   top: 0;
   background:
-    var(--scallop) 50% 100% / var(--tile) var(--tile) repeat-x,
-    var(--solid) 0 0 / 100% var(--band) no-repeat;
+    var(--paper) 0 0 / 100% var(--margin) no-repeat,
+    var(--scallop) 50% calc(var(--inner) - var(--sc)) / var(--tile) var(--tile) repeat-x,
+    var(--solid) 0 var(--margin) / 100% var(--band) no-repeat;
 }
 .lw-frame__edge--bottom {
   bottom: 0;
   background:
-    var(--scallop) 50% 0 / var(--tile) var(--tile) repeat-x,
-    var(--solid) 0 100% / 100% var(--band) no-repeat;
+    var(--paper) 0 100% / 100% var(--margin) no-repeat,
+    var(--scallop) 50% calc(100% - var(--inner) + var(--sc)) / var(--tile) var(--tile) repeat-x,
+    var(--solid) 0 calc(100% - var(--margin)) / 100% var(--band) no-repeat;
 }
 
 .lw-frame__edge--left,
 .lw-frame__edge--right {
-  top: 0;
-  bottom: 0;
-  width: calc(var(--frame) + var(--bleed));
+  top: var(--margin);
+  bottom: var(--margin);
+  width: var(--frame);
 }
 .lw-frame__edge--left {
   left: 0;
   background:
-    var(--scallop) 100% 50% / var(--tile) var(--tile) repeat-y,
-    var(--solid) 0 0 / var(--band) 100% no-repeat;
+    var(--paper) 0 0 / var(--margin) 100% no-repeat,
+    var(--scallop) calc(var(--inner) - var(--sc)) 50% / var(--tile) var(--tile) repeat-y,
+    var(--solid) var(--margin) 0 / var(--band) 100% no-repeat;
 }
 .lw-frame__edge--right {
   right: 0;
   background:
-    var(--scallop) 0 50% / var(--tile) var(--tile) repeat-y,
-    var(--solid) 100% 0 / var(--band) 100% no-repeat;
+    var(--paper) 100% 0 / var(--margin) 100% no-repeat,
+    var(--scallop) calc(100% - var(--inner) + var(--sc)) 50% / var(--tile) var(--tile) repeat-y,
+    var(--solid) calc(100% - var(--margin)) 0 / var(--band) 100% no-repeat;
 }
 
 /* ---------------------------------------------------------------- Sheet */
@@ -157,7 +164,7 @@
   top: calc(var(--frame) + 8px);
   left: 50%;
   z-index: 60;
-  transform: translate(-50%, -200%);
+  transform: translate(-50%, calc(-100% - var(--frame) - 20px));
   padding: 0.6em 1.2em;
   background: var(--ivory);
   color: var(--burgundy);
@@ -379,18 +386,27 @@
   text-wrap: pretty;
 }
 
-/* ---------------------------------------------------------------- 01 Hero */
+/* ---------------------------------------------------------------- 01 Hero
+   A faithful recomposition of the printed card. One unit (--u) scales the
+   whole stack by the smaller of height and width, so the invitation always
+   fits the first screen — like holding the card.                         */
 
 .lw-hero {
+  /* the whole card must fit between the top and bottom scallops */
+  --u: min(calc((100vh - 2 * var(--frame)) / 98), 1.5vw);
+  --u: min(calc((100svh - 2 * var(--frame)) / 98), 1.5vw);
   position: relative;
   min-height: 100vh;
   min-height: 100svh;
   display: grid;
   place-items: center;
-  padding: calc(var(--frame) + clamp(28px, 5vh, 56px)) var(--safe) calc(var(--frame) + clamp(48px, 9vh, 96px));
+  padding: calc(var(--frame) + 2.6 * var(--u)) var(--safe) calc(var(--frame) + 4 * var(--u));
+}
+@media (max-width: 720px) {
+  .lw-hero { --u: min(calc((100svh - 2 * var(--frame)) / 98), 1.72vw); padding-inline: calc(var(--frame) + 14px); }
 }
 
-.lw-hero__type {
+.lw-card-face {
   position: relative;
   z-index: 3;
   display: flex;
@@ -399,12 +415,14 @@
   text-align: center;
 }
 
-.lw-sun {
-  width: clamp(88px, 9vw, 136px);
+.lw-hero__sunrow {
+  display: flex;
+  align-items: center;
+  gap: calc(3.4 * var(--u));
 }
-.lw-hero__sun {
-  margin-bottom: clamp(10px, 2vh, 22px);
-}
+.lw-sun { width: calc(13 * var(--u)); }
+.lw-hero__spark { width: calc(2.8 * var(--u)); margin-top: calc(-3 * var(--u)); }
+.lw-hero__spark--low { margin-top: calc(1 * var(--u)); }
 
 .lw-hero__title {
   display: flex;
@@ -414,64 +432,112 @@
   font-weight: 400;
 }
 
-.lw-hero__std {
+/* SAVE THE DATE — Garamond caps with swash capitals */
+.lw-std {
+  position: relative;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  margin-top: calc(1.4 * var(--u));
   font-family: var(--font-display);
-  font-size: clamp(2.5rem, 5.8vw, 5.3rem);
+  font-size: calc(7.6 * var(--u));
+  font-weight: 500;
+  line-height: 1.02;
+  letter-spacing: 0.02em;
+}
+.lw-std__line { display: block; white-space: nowrap; }
+.lw-swash-word { white-space: nowrap; }
+.lw-swash {
+  font-family: var(--font-script);
   font-weight: 400;
-  line-height: 0.98;
-  letter-spacing: 0.15em;
-  text-indent: 0.15em;
-  text-transform: uppercase;
+  font-size: 1.62em;
+  line-height: 0;
+  margin-right: 0.02em;
+  vertical-align: -0.04em;
+}
+.lw-std__flourish {
+  position: absolute;
+  right: -0.32em;
+  bottom: -0.42em;
+  width: 1.05em;
+  pointer-events: none;
 }
 
+/* pacifier + flowers vignette */
+.lw-hero__vignette {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  margin-top: calc(1.8 * var(--u));
+  height: calc(17 * var(--u));
+}
+.lw-vig__pacifier { width: calc(17 * var(--u)); margin: 0 calc(0.6 * var(--u)); }
+.lw-vig__flower { width: calc(10 * var(--u)); }
+.lw-vig__flower--l { transform: translateY(calc(-3 * var(--u))); }
+.lw-vig__flower--r { transform: translateY(calc(-1.6 * var(--u))); }
+.lw-vig__flower svg,
+.lw-vig__pacifier svg { display: block; width: 100%; height: auto; overflow: visible; }
+.lw-vig__spark { position: absolute; width: calc(2.6 * var(--u)); }
+.lw-vig__spark--a { left: calc(-1.6 * var(--u)); top: calc(7.6 * var(--u)); }
+.lw-vig__spark--b { right: calc(1 * var(--u)); top: calc(0.4 * var(--u)); }
+.lw-hero__spark svg,
+.lw-vig__spark svg { display: block; }
+
 .lw-hero__event {
-  margin-top: clamp(18px, 3.2vh, 34px);
+  margin-top: calc(1.6 * var(--u));
   font-family: var(--font-display);
+  font-size: calc(6.6 * var(--u));
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: 0.005em;
+  white-space: nowrap;
+}
+.lw-hero__event em {
   font-style: italic;
-  font-size: clamp(1.45rem, 2.7vw, 2.35rem);
-  font-weight: 400;
-  letter-spacing: 0.01em;
+  font-weight: 500;
+  font-size: 0.86em;
 }
 
 .lw-hero__da {
   display: block;
-  margin-top: 0.12em;
+  font-size: calc(5.4 * var(--u));
+  line-height: 0.9;
+  margin-top: calc(0.2 * var(--u));
 }
-
 .lw-hero__name {
   display: block;
-  margin-top: -0.04em;
+  font-size: calc(13 * var(--u));
   line-height: 0.95;
+  margin-top: calc(-0.8 * var(--u));
 }
 
+.lw-card-face .lw-hero__divider { width: calc(24 * var(--u)); margin: calc(1.8 * var(--u)) auto calc(1.4 * var(--u)); }
 .lw-hero__date {
-  display: flex;
-  align-items: center;
-  gap: 1.1em;
-  margin: clamp(14px, 2.6vh, 28px) 0 0;
+  margin: 0;
   font-family: var(--font-display);
-  font-size: clamp(0.92rem, 1.35vw, 1.12rem);
-  font-weight: 500;
-  letter-spacing: 0.36em;
-  text-indent: 0.36em;
+  font-size: calc(3.3 * var(--u));
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-indent: 0.2em;
   text-transform: uppercase;
 }
-.lw-hero__rule {
-  width: clamp(26px, 4vw, 52px);
-  height: 1.5px;
-  background: var(--butter-yellow);
+.lw-hero__note {
+  margin: calc(2.2 * var(--u)) 0 0;
+  font-style: italic;
+  font-size: max(0.95rem, calc(1.9 * var(--u)));
+  font-weight: 500;
+  letter-spacing: 0.12em;
 }
 
 .lw-scroll-cue {
   position: absolute;
-  bottom: calc(var(--frame) + 18px);
+  bottom: calc(var(--frame) + 12px);
   left: 50%;
-  width: 18px;
-  margin-left: -9px;
+  width: 16px;
+  margin-left: -8px;
   color: var(--burgundy);
-  opacity: 0.7;
+  opacity: 0.6;
   z-index: 3;
 }
 .lw-scroll-cue svg {
@@ -482,13 +548,6 @@
 @keyframes lw-cue {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(5px); }
-}
-
-@media (max-width: 720px) {
-  .lw-hero__std { font-size: clamp(2.5rem, 13vw, 3.4rem); }
-  .lw-hero__event { font-size: clamp(1.35rem, 6.4vw, 1.7rem); }
-  .lw-script--xl { font-size: clamp(5.2rem, 27vw, 7.2rem); }
-  .lw-hero__date { letter-spacing: 0.28em; text-indent: 0.28em; }
 }
 
 /* ---------------------------------------------------------------- Sections (shared) */

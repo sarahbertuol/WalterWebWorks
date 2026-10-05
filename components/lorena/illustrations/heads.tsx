@@ -180,7 +180,7 @@ export function Leaf({
   const ribColor = style === "solid" || style === "brown" ? C.ivory : C.ink;
   return (
     <g>
-      {style === "line" ? <Ink d={d} sw={1.3} /> : <Riso d={d} fill={fill} sw={1.4} outline={style !== "brown"} off={[1.1, 0.9]} />}
+      {style === "line" ? <Ink d={d} sw={1.3} /> : <Riso d={d} fill={fill} sw={1.4} ink={style === "outline" ? C.stem : C.ink} />}
       <Ink d={rib(x, y, angle, len * 0.08, len * 0.82, jit(rng(seed), w * 0.15))} sw={0.9} color={ribColor} opacity={style === "solid" || style === "brown" ? 0.7 : 0.55} />
     </g>
   );

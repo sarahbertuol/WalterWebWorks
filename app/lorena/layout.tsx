@@ -1,21 +1,13 @@
 import type { Metadata, Viewport } from "next";
-import { Bodoni_Moda, Cormorant_Garamond, Pinyon_Script } from "next/font/google";
+import { Cormorant_Garamond, Pinyon_Script } from "next/font/google";
 import { content } from "@/lib/lorena/content";
 import { palette } from "@/lib/lorena/tokens";
 import "./lorena.css";
 
-const display = Bodoni_Moda({
-  variable: "--font-lw-display",
-  subsets: ["latin"],
-  weight: ["400", "500"],
-  style: ["normal", "italic"],
-  display: "swap",
-});
-
 const body = Cormorant_Garamond({
   variable: "--font-lw-body",
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: ["400", "500", "600", "700"],
   style: ["normal", "italic"],
   display: "swap",
 });
@@ -43,5 +35,5 @@ export const viewport: Viewport = {
 };
 
 export default function LorenaLayout({ children }: { children: React.ReactNode }) {
-  return <div className={`${display.variable} ${body.variable} ${script.variable}`}>{children}</div>;
+  return <div className={`${body.variable} ${script.variable}`}>{children}</div>;
 }

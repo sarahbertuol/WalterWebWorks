@@ -1,36 +1,33 @@
 import { C } from "@/lib/lorena/tokens";
-import { petal, polar, wobbleCircle } from "@/lib/lorena/draw";
+import { polar, wobbleCircle } from "@/lib/lorena/draw";
 import { Art, Riso, Ink } from "./primitives";
 
 type P = { className?: string };
 
-/** The sleepy, smiling sun from the top of the invitation. */
+/** The sleepy sun from the top of the invitation — flat gold, triangular rays. */
 export function Sun({ className }: P) {
-  const rays = Array.from({ length: 16 }, (_, i) => i);
   return (
     <Art viewBox="0 0 220 220" className={className}>
       <g className="lw-sun-rays" style={{ transformOrigin: "110px 110px" }}>
-        {rays.map((i) => {
+        {Array.from({ length: 16 }, (_, i) => {
+          const a = i * 22.5 - 90;
           const long = i % 2 === 0;
-          return (
-            <Riso
-              key={i}
-              d={petal({ cx: 110, cy: 110, angle: i * 22.5 - 90, inner: 46, len: long ? 50 : 32, width: long ? 9 : 7.5, tip: "point", seed: 200 + i, belly: 0.3, base: 0.9 })}
-              fill={C.sun}
-              sw={1.6}
-            />
-          );
+          const spread = long ? 10.5 : 9;
+          const [x1, y1] = polar(110, 110, 46, a - spread);
+          const [x2, y2] = polar(110, 110, 46, a + spread);
+          const [tx, ty] = polar(110, 110, long ? 104 : 82, a + (i % 3) - 1);
+          return <Riso key={i} d={`M${x1} ${y1}L${tx} ${ty}L${x2} ${y2}Z`} fill={C.sun} sw={1.2} />;
         })}
       </g>
-      <Riso d={wobbleCircle(110, 110, 47, 207, 0.04, 10)} fill={C.sun} sw={2} off={[2, 1.6]} />
-      {/* closed, sleepy eyes with lashes */}
-      <Ink d="M88 104Q96 112 104 104" sw={2} />
-      <Ink d="M116 104Q124 112 132 104" sw={2} />
-      <Ink d="M90 109l-2.6 3.8M96 111.4v4.4M102 109l2.4 3.8" sw={1.4} />
-      <Ink d="M118 109l-2.4 3.8M124 111.4v4.4M130 109l2.6 3.8" sw={1.4} />
-      <ellipse cx={84} cy={124} rx={8} ry={5} fill={C.blush} opacity={0.9} />
-      <ellipse cx={136} cy={124} rx={8} ry={5} fill={C.blush} opacity={0.9} />
-      <Ink d="M103 125Q110 132 117 125" sw={2} />
+      <Riso d={wobbleCircle(110, 110, 50, 207, 0.025, 12)} fill={C.sun} sw={1.4} />
+      <path d={wobbleCircle(110, 112, 41, 208, 0.03, 10)} fill={C.ivory} opacity={0.32} />
+      {/* closed, sleepy eyes · tiny smile */}
+      <Ink d="M88 106Q95 113 102 106" sw={2} color={C.stem} />
+      <Ink d="M118 106Q125 113 132 106" sw={2} color={C.stem} />
+      <Ink d="M109 113q-2 5 1 7" sw={1.3} color={C.stem} opacity={0.7} />
+      <Ink d="M102 126Q110 132 118 126" sw={1.8} color={C.stem} />
+      <ellipse cx={86} cy={121} rx={7} ry={4} fill={C.blush} opacity={0.45} />
+      <ellipse cx={134} cy={121} rx={7} ry={4} fill={C.blush} opacity={0.45} />
     </Art>
   );
 }
@@ -43,14 +40,14 @@ export function SunSmall({ className }: P) {
         const a = i * 30 - 90 + (i % 2 ? 4 : -3);
         const [x1, y1] = polar(60, 60, 33, a);
         const [x2, y2] = polar(60, 60, i % 2 ? 46 : 53, a);
-        return <Ink key={i} d={`M${x1} ${y1}L${x2} ${y2}`} sw={2.4} />;
+        return <Ink key={i} d={`M${x1} ${y1}L${x2} ${y2}`} sw={3.4} color={C.sun} />;
       })}
       <Riso d={wobbleCircle(60, 60, 26, 211, 0.05)} fill={C.sun} sw={1.8} />
-      <circle cx={51} cy={57} r={2.4} fill={C.ink} />
-      <circle cx={69} cy={57} r={2.4} fill={C.ink} />
+      <circle cx={51} cy={57} r={2.2} fill={C.stem} />
+      <circle cx={69} cy={57} r={2.2} fill={C.stem} />
       <ellipse cx={47} cy={66} rx={4.4} ry={2.8} fill={C.blush} />
       <ellipse cx={73} cy={66} rx={4.4} ry={2.8} fill={C.blush} />
-      <Ink d="M54 67Q60 73 66 67" sw={1.8} />
+      <Ink d="M54 67Q60 73 66 67" sw={1.8} color={C.stem} />
     </Art>
   );
 }
