@@ -44,7 +44,14 @@ Rota: `/lorena` · Textos: `lib/lorena/content.ts` · Fase atual: **save the dat
 
 ---
 
-## 3. Subdomínio (ex.: `lorena.seudominio.com.br`)
+## 3. Endereço do convite
+
+**Temporário (já preparado no código): `convitelorena.vercel.app`**
+1. **Vercel** → projeto que publica este repositório → *Settings → Domains → Add* → `convitelorena.vercel.app`.
+2. Pronto: a raiz desse endereço abre o convite. Não precisa de variável de ambiente.
+   - Enquanto o PR não estiver em `main`, em *Domains → Edit* aponte o domínio para a branch `ccr-9f25ab4d-qpjh40`.
+
+**Definitivo (ex.: `lorena.seudominio.com.br`)**
 
 1. **Vercel** → *Project → Settings → Domains → Add* → `lorena.seudominio.com.br`.
 2. **DNS** (onde o domínio está registrado) → registro **CNAME**: nome `lorena`, valor `cname.vercel-dns.com`.

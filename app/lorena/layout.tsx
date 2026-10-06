@@ -19,8 +19,8 @@ const script = Pinyon_Script({
   display: "swap",
 });
 
-/** Subdomain serving the invitation (e.g. lorena.seudominio.com.br) — see docs/lorena/README.md */
-const host = process.env.LORENA_HOST;
+/** Address guests receive — temporary vercel.app until LORENA_HOST is set (docs/lorena/README.md) */
+const host = process.env.LORENA_HOST || "convitelorena.vercel.app";
 
 /** Share preview (WhatsApp, iMessage, Instagram DM): the card itself. */
 const shareImage = {
@@ -31,17 +31,17 @@ const shareImage = {
 };
 
 export const metadata: Metadata = {
-  ...(host ? { metadataBase: new URL(`https://${host}`) } : {}),
+  metadataBase: new URL(`https://${host}`),
   title: content.meta.title,
   description: content.meta.description,
-  alternates: { canonical: host ? "/" : "/lorena" },
+  alternates: { canonical: "/" },
   robots: { index: false, follow: false },
   openGraph: {
     title: content.meta.title,
     description: content.meta.description,
     type: "website",
     locale: "pt_BR",
-    url: host ? "/" : "/lorena",
+    url: "/",
     images: [shareImage],
   },
   twitter: {

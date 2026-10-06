@@ -1,18 +1,17 @@
 import type { NextConfig } from "next";
 
 /**
- * LORENA_HOST — optional subdomain for the baby-shower invitation
- * (e.g. "lorena.seudominio.com.br"). When set, the root of that host serves
- * /lorena, so the link guests receive is just the subdomain.
+ * Hosts whose root serves the baby-shower invitation instead of the WWW home.
+ * convitelorena.vercel.app is the temporary address; LORENA_HOST adds a
+ * definitive one later (e.g. "lorena.seudominio.com.br").
  */
-const lorenaHost = process.env.LORENA_HOST;
+const lorenaHosts = ["convitelorena.vercel.app", process.env.LORENA_HOST].filter((h): h is string => Boolean(h));
 
 const nextConfig: NextConfig = {
   async rewrites() {
-    if (!lorenaHost) return [];
     return {
       // beforeFiles: "/" is also the WWW home page, so the host rule must win first
-      beforeFiles: [{ source: "/", has: [{ type: "host", value: lorenaHost }], destination: "/lorena" }],
+      beforeFiles: lorenaHosts.map((host) => ({ source: "/", has: [{ type: "host" as const, value: host }], destination: "/lorena" })),
       afterFiles: [],
       fallback: [],
     };
