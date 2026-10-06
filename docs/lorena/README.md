@@ -1,6 +1,14 @@
 # Lorena — convite digital · SOP
 
-Rota: `/lorena` · Textos: `lib/lorena/content.ts` · Fase atual: **save the date** (`showDetails: false`)
+Textos: `lib/lorena/content.ts` · Cidades e datas: `lib/lorena/editions.ts` · Fase atual: **save the date** (`showDetails: false`)
+
+| Endereço | Edição |
+|---|---|
+| `convitelorena.vercel.app` | Caxias do Sul (raiz, link original) |
+| `convitelorena.vercel.app/caxias-dos-sul` | Caxias do Sul · 21 de Novembro |
+| `convitelorena.vercel.app/novo-hamburgo` | Novo Hamburgo · 12 de Dezembro |
+
+**Nova cidade:** copie um bloco em `editions.ts`, troque o slug (vira a URL) e os dados, e gere a prévia `public/lorena/og-<slug>.jpg`. Local, endereço, horário, mapa e prazo do RSVP também ficam por cidade em `editions.ts`.
 
 ---
 
@@ -20,11 +28,13 @@ Rota: `/lorena` · Textos: `lib/lorena/content.ts` · Fase atual: **save the dat
    | `LORENA_RSVP_WEBHOOK` | URL do passo 4 |
    | `LORENA_RSVP_SECRET` | mesmo segredo do passo 3 |
 
-6. **Redeploy** e faça um RSVP de teste — a aba `RSVP` aparece sozinha com cabeçalho.
+6. **Redeploy** e faça um RSVP de teste — a aba `RSVP` aparece sozinha com cabeçalho (Recebido em · Cidade · Nome · Vem? · Pessoas · Observações).
 
 **Totais rápidos** (cole numa célula livre):
-- Confirmados (pessoas): `=SUMIF(RSVP!C:C;"Sim";RSVP!D:D)`
-- Respostas "não": `=COUNTIF(RSVP!C:C;"Não")`
+- Confirmados, total: `=SUMIF(RSVP!D:D;"Sim";RSVP!E:E)`
+- Confirmados por cidade: `=SUMIFS(RSVP!E:E;RSVP!D:D;"Sim";RSVP!B:B;"Novo Hamburgo")`
+- Respostas "não": `=COUNTIF(RSVP!D:D;"Não")`
+- Já colou o script antes desta versão? Cole o novo, apague a aba `RSVP` (sem respostas reais ainda) e publique uma nova versão.
 
 > Editou o script depois? *Implantar → Gerenciar implantações → editar → Nova versão*. A URL continua a mesma.
 
@@ -35,8 +45,8 @@ Rota: `/lorena` · Textos: `lib/lorena/content.ts` · Fase atual: **save the dat
 
 ## 2. Imagem de compartilhamento (WhatsApp / Instagram / iMessage)
 
-- Arquivo: `public/lorena/og.jpg` (1200×630, ~120 KB) — é o próprio cartão renderizado.
-- Já configurada nos metadados (`app/lorena/layout.tsx`), com título e descrição.
+- Arquivos: `public/lorena/og-<cidade>.jpg` (1200×630, ~120 KB cada) — o próprio cartão de cada cidade, com a data certa.
+- Já configurada nos metadados (`lib/lorena/metadata.ts`), com título e descrição por cidade.
 - A página está com `noindex` (convite privado, fora do Google).
 - Testar a prévia: cole o link em <https://www.opengraph.xyz> ou mande para você mesma no WhatsApp.
 - WhatsApp guarda a prévia em cache: se mandar o link antes de a imagem existir, teste com `?v=2` no fim.

@@ -1,4 +1,4 @@
-import { content } from "@/lib/lorena/content";
+import type { Content } from "@/lib/lorena/content";
 import { C } from "@/lib/lorena/tokens";
 import { Illustration } from "../Illustration";
 import { DecorativeDivider, InvitationSection, ScriptWord, SectionTitle, StationeryButton } from "../Type";
@@ -10,7 +10,7 @@ import { Blob, DotTrail, Heart, Sparkle, Squiggle, Star, StarCluster } from "../
 
 /* ------------------------------------------------------------------ 02 */
 
-export function Invitation() {
+export function Invitation({ content }: { content: Content }) {
   const c = content.invitation;
   return (
     <InvitationSection id="convite" className="lw-invite" labelledBy="convite-t">
@@ -47,7 +47,7 @@ export function Invitation() {
 
 /* ------------------------------------------------------------------ 03 */
 
-export function TheDate() {
+export function TheDate({ content }: { content: Content }) {
   const c = content.date;
   return (
     <InvitationSection id="data" className="lw-date" labelledBy="data-t">
@@ -103,7 +103,7 @@ export function TheDate() {
 
 /* ------------------------------------------------------------------ 04 */
 
-export function Details() {
+export function Details({ content }: { content: Content }) {
   const c = content.details;
   return (
     <InvitationSection id="brunch" className="lw-details" labelledBy="brunch-t">
@@ -153,7 +153,7 @@ export function Details() {
 
 /* ------------------------------------------------------------------ 05 */
 
-export function TheDay() {
+export function TheDay({ content }: { content: Content }) {
   const c = content.day;
   return (
     <InvitationSection id="o-dia" className="lw-day" labelledBy="dia-t">
@@ -191,7 +191,7 @@ export function TheDay() {
 
 /* ------------------------------------------------------------------ 06 */
 
-export function Gifts() {
+export function Gifts({ content }: { content: Content }) {
   const c = content.gifts;
   return (
     <InvitationSection id="fraldas" className="lw-gifts" labelledBy="fraldas-t">
@@ -237,7 +237,7 @@ export function Gifts() {
 
 /* ------------------------------------------------------------------ 08 */
 
-export function Closing() {
+export function Closing({ content }: { content: Content }) {
   const c = content.closing;
   return (
     <footer className="lw-section lw-closing" id="ate-la">

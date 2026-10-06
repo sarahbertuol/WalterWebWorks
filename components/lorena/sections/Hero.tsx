@@ -1,5 +1,5 @@
 import type { CSSProperties } from "react";
-import { content } from "@/lib/lorena/content";
+import type { Content } from "@/lib/lorena/content";
 import { Illustration } from "../Illustration";
 import { ScriptWord, DecorativeDivider } from "../Type";
 import { Sun } from "../illustrations/Sun";
@@ -40,7 +40,7 @@ function SwashTitle({ words }: { words: readonly string[] }) {
  * 01 — the printed invitation, faithfully recomposed for the screen.
  * `more` = the rest of the page exists below (shows the scroll cue).
  */
-export function Hero({ more = true }: { more?: boolean }) {
+export function Hero({ content, more = true }: { content: Content; more?: boolean }) {
   const h = content.hero;
   return (
     <header className="lw-hero" id="topo">

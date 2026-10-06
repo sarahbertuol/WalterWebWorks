@@ -7,7 +7,7 @@
 // Mesmo valor da variável LORENA_RSVP_SECRET na Vercel.
 const SECRET = 'COLE_AQUI_O_SEGREDO';
 const SHEET_NAME = 'RSVP';
-const HEADER = ['Recebido em', 'Nome', 'Vem?', 'Pessoas', 'Observações'];
+const HEADER = ['Recebido em', 'Cidade', 'Nome', 'Vem?', 'Pessoas', 'Observações'];
 
 function doPost(e) {
   const lock = LockService.getScriptLock();
@@ -19,6 +19,7 @@ function doPost(e) {
     const vem = data.vem === 'sim';
     sheet_().appendRow([
       new Date(),
+      safe_(data.cidade),
       safe_(data.nome),
       vem ? 'Sim' : 'Não',
       vem ? Math.min(6, Math.max(1, Number(data.pessoas) || 1)) : 0,

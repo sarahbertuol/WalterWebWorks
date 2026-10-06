@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { editions, isEditionSlug } from "@/lib/lorena/editions";
 
 /**
  * RSVP → Google Sheets.
@@ -27,7 +28,8 @@ export async function POST(req: Request) {
   const vem = body.vem === "sim" || body.vem === "nao" ? body.vem : "";
   const pessoas = vem === "sim" ? Math.min(6, Math.max(1, Number.parseInt(String(body.pessoas), 10) || 1)) : 0;
   const obs = String(body.obs ?? "").trim().slice(0, 1000);
-  if (!nome || !vem) return fail("missing-fields", 400);
+  if (!nome || !vem || !isEditionSlug(body.cidade)) return fail("missing-fields", 400);
+  const cidade = editions[body.cidade].city;
 
   const webhook = process.env.LORENA_RSVP_WEBHOOK;
   if (!webhook) return fail("not-configured", 503);
@@ -37,7 +39,7 @@ export async function POST(req: Request) {
     const res = await fetch(webhook, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ token: process.env.LORENA_RSVP_SECRET ?? "", nome, vem, pessoas, obs }),
+      body: JSON.stringify({ token: process.env.LORENA_RSVP_SECRET ?? "", cidade, nome, vem, pessoas, obs }),
       redirect: "follow",
       signal: AbortSignal.timeout(10_000),
     });
