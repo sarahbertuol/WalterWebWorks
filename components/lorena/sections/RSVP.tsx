@@ -1,4 +1,4 @@
-import { content } from "@/lib/lorena/content";
+import type { Content } from "@/lib/lorena/content";
 import { Illustration } from "../Illustration";
 import { InvitationSection, SectionTitle } from "../Type";
 import { RSVPForm } from "../RSVPForm";
@@ -6,7 +6,7 @@ import { WildMeadow, FlowerForgetMeNot, WildBells } from "../illustrations/Flowe
 import { Sparkle, Heart } from "../illustrations/Decor";
 
 /** 07 — RSVP: a reply card tucked into a meadow of small wildflowers. */
-export function RSVP() {
+export function RSVP({ content }: { content: Content }) {
   const c = content.rsvp;
   return (
     <InvitationSection id="rsvp" className="lw-rsvp" labelledBy="rsvp-t">
@@ -35,7 +35,7 @@ export function RSVP() {
           {c.deadline}
         </p>
         <div className="lw-card lw-card--form lw-reveal" data-reveal="" style={{ ["--delay" as string]: "250ms" }}>
-          <RSVPForm />
+          <RSVPForm rsvp={c} edition={content.slug} city={content.city} />
         </div>
       </div>
     </InvitationSection>

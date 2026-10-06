@@ -1,42 +1,11 @@
-import type { CSSProperties } from "react";
-import { cssTokens } from "@/lib/lorena/tokens";
-import { IllustrationDefs } from "@/components/lorena/illustrations/primitives";
-import { FixedScallopedFrame, StripeBackground, PaperGrain } from "@/components/lorena/Frame";
-import { MotionController } from "@/components/lorena/MotionController";
-import { Hero } from "@/components/lorena/sections/Hero";
-import { Invitation, TheDate, Details, TheDay, Gifts, Closing } from "@/components/lorena/sections/Story";
-import { RSVP } from "@/components/lorena/sections/RSVP";
-import { content } from "@/lib/lorena/content";
+import { Invite } from "@/components/lorena/Invite";
+import { getContent } from "@/lib/lorena/content";
+import { defaultEdition } from "@/lib/lorena/editions";
+import { inviteMetadata } from "@/lib/lorena/metadata";
+
+/** convitelorena.vercel.app (root) — keeps showing the original edition. */
+export const metadata = inviteMetadata(defaultEdition, "/");
 
 export default function LorenaPage() {
-  return (
-    <div className="lw" style={cssTokens as CSSProperties}>
-      {content.showDetails && (
-        <a className="lw-skip" href="#rsvp">
-          Pular para o RSVP
-        </a>
-      )}
-      <IllustrationDefs />
-      <StripeBackground />
-
-      <main className="lw-sheet">
-        <Hero more={content.showDetails} />
-        {content.showDetails && (
-          <>
-            <Invitation />
-            <TheDate />
-            <Details />
-            <TheDay />
-            <Gifts />
-            <RSVP />
-            <Closing />
-          </>
-        )}
-      </main>
-
-      <PaperGrain />
-      <FixedScallopedFrame />
-      <MotionController />
-    </div>
-  );
+  return <Invite content={getContent(defaultEdition)} />;
 }

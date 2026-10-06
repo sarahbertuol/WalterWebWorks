@@ -1,16 +1,17 @@
 "use client";
 
 import { useId, useState, type FormEvent } from "react";
-import { content } from "@/lib/lorena/content";
+import type { Content } from "@/lib/lorena/content";
+import type { EditionSlug } from "@/lib/lorena/editions";
 import { StationeryButton } from "./Type";
 
 type Status = "idle" | "yes" | "no";
 type Reply = { nome: string; vem: string; pessoas: string; obs: string };
 
 /** WhatsApp link with the reply pre-written — plan B if the sheet is unreachable. */
-function whatsappLink(number: string, r: Reply) {
+function whatsappLink(number: string, r: Reply, city: string) {
   const msg =
-    `RSVP — Brunch de Fraldas da Lorena\n` +
+    `RSVP — Brunch de Fraldas da Lorena (${city})\n` +
     `Nome: ${r.nome}\nVem: ${r.vem === "sim" ? "Sim" : "Não"}\n` +
     (r.vem === "sim" ? `Pessoas: ${r.pessoas}\n` : "") +
     (r.obs ? `Obs.: ${r.obs}` : "");
@@ -20,11 +21,10 @@ function whatsappLink(number: string, r: Reply) {
 /**
  * RSVP written like a reply card.
  * Replies are posted to /api/lorena/rsvp, which appends them to the Google
- * Sheet (see docs/lorena/README.md). If that fails and content.rsvp.whatsapp
+ * Sheet with the city it came from (see docs/lorena/README.md). If that fails and rsvp.whatsapp
  * is set, the guest gets a one-tap WhatsApp fallback instead.
  */
-export function RSVPForm() {
-  const c = content.rsvp;
+export function RSVPForm({ rsvp: c, edition, city }: { rsvp: Content["rsvp"]; edition: EditionSlug; city: string }) {
   const f = c.fields;
   const uid = useId();
   const [attending, setAttending] = useState<"" | "sim" | "nao">("");
@@ -52,13 +52,13 @@ export function RSVPForm() {
       const res = await fetch("/api/lorena/rsvp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...reply, website: String(fd.get("website") || "") }),
+        body: JSON.stringify({ ...reply, cidade: edition, website: String(fd.get("website") || "") }),
       });
       if (!res.ok) throw new Error(String(res.status));
       setStatus(reply.vem === "sim" ? "yes" : "no");
     } catch {
       setError(c.error);
-      if (c.whatsapp) setFallback(whatsappLink(c.whatsapp, reply));
+      if (c.whatsapp) setFallback(whatsappLink(c.whatsapp, reply, city));
     } finally {
       setSending(false);
     }
