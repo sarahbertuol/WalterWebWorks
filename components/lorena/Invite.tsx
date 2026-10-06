@@ -15,7 +15,8 @@ import { RSVP } from "./sections/RSVP";
 export function Invite({ content, choices }: { content: Content; choices?: CityChoice[] }) {
   const details = content.showDetails && !choices;
   return (
-    <div className="lw" style={cssTokens as CSSProperties}>
+    // only the card (save the date / city chooser) → the sheet doesn't scroll
+    <div className={details ? "lw" : "lw lw--locked"} style={cssTokens as CSSProperties}>
       {details && (
         <a className="lw-skip" href="#rsvp">
           Pular para o RSVP

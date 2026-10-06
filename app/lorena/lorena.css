@@ -982,4 +982,30 @@
 }
 @media (max-width: 420px) {
   .lw-hero__choices { flex-direction: column; align-items: stretch; width: min(100%, 280px); }
+  /* stacked buttons are taller than the date line: budget more height units
+     so the whole card (buttons included) still fits a short phone screen */
+  .lw-hero:has(.lw-hero__choices) {
+    --u: min(calc((100svh - 2 * var(--frame)) / 108), 1.72vw);
+  }
+}
+
+/* Card-only pages (save the date, city chooser): nothing to scroll to,
+   so the sheet is pinned to the viewport — no scroll, no rubber-band. */
+html:has(.lw--locked),
+body:has(.lw--locked) {
+  height: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+.lw--locked {
+  position: fixed;
+  inset: 0;
+  min-height: 0;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+.lw--locked .lw-sheet,
+.lw--locked .lw-hero {
+  height: 100%;
+  min-height: 0;
 }
