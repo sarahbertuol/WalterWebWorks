@@ -4,15 +4,19 @@ import type { Content } from "@/lib/lorena/content";
 import { IllustrationDefs } from "./illustrations/primitives";
 import { FixedScallopedFrame, StripeBackground, PaperGrain } from "./Frame";
 import { MotionController } from "./MotionController";
-import { Hero } from "./sections/Hero";
+import { Hero, type CityChoice } from "./sections/Hero";
 import { Invitation, TheDate, Details, TheDay, Gifts, Closing } from "./sections/Story";
 import { RSVP } from "./sections/RSVP";
 
-/** The whole invitation for one city edition. */
-export function Invite({ content }: { content: Content }) {
+/**
+ * The whole invitation for one city edition — or, with `choices`, the root
+ * card that sends guests to their city.
+ */
+export function Invite({ content, choices }: { content: Content; choices?: CityChoice[] }) {
+  const details = content.showDetails && !choices;
   return (
     <div className="lw" style={cssTokens as CSSProperties}>
-      {content.showDetails && (
+      {details && (
         <a className="lw-skip" href="#rsvp">
           Pular para o RSVP
         </a>
@@ -21,8 +25,8 @@ export function Invite({ content }: { content: Content }) {
       <StripeBackground />
 
       <main className="lw-sheet">
-        <Hero content={content} more={content.showDetails} />
-        {content.showDetails && (
+        <Hero content={content} more={details} choices={choices} />
+        {details && (
           <>
             <Invitation content={content} />
             <TheDate content={content} />
