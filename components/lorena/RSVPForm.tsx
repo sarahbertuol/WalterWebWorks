@@ -5,12 +5,23 @@ import { content } from "@/lib/lorena/content";
 import { StationeryButton } from "./Type";
 
 type Status = "idle" | "yes" | "no";
+type Reply = { nome: string; vem: string; pessoas: string; obs: string };
+
+/** WhatsApp link with the reply pre-written — plan B if the sheet is unreachable. */
+function whatsappLink(number: string, r: Reply) {
+  const msg =
+    `RSVP — Brunch de Fraldas da Lorena\n` +
+    `Nome: ${r.nome}\nVem: ${r.vem === "sim" ? "Sim" : "Não"}\n` +
+    (r.vem === "sim" ? `Pessoas: ${r.pessoas}\n` : "") +
+    (r.obs ? `Obs.: ${r.obs}` : "");
+  return `https://wa.me/${number}?text=${encodeURIComponent(msg)}`;
+}
 
 /**
  * RSVP written like a reply card.
- * Destination: if content.rsvp.whatsapp is set, the reply opens WhatsApp
- * with a pre-filled message; otherwise it confirms on screen only.
- * (Swap `deliver` for Formspree / Google Sheets / Webflow when ready.)
+ * Replies are posted to /api/lorena/rsvp, which appends them to the Google
+ * Sheet (see docs/lorena/README.md). If that fails and content.rsvp.whatsapp
+ * is set, the guest gets a one-tap WhatsApp fallback instead.
  */
 export function RSVPForm() {
   const c = content.rsvp;
@@ -18,28 +29,39 @@ export function RSVPForm() {
   const uid = useId();
   const [attending, setAttending] = useState<"" | "sim" | "nao">("");
   const [status, setStatus] = useState<Status>("idle");
+  const [sending, setSending] = useState(false);
   const [error, setError] = useState("");
+  const [fallback, setFallback] = useState("");
 
-  function deliver(data: { nome: string; vem: string; pessoas: string; obs: string }) {
-    if (!c.whatsapp) return;
-    const msg =
-      `RSVP — Brunch de Fraldas da Lorena\n` +
-      `Nome: ${data.nome}\nVem: ${data.vem === "sim" ? "Sim" : "Não"}\n` +
-      (data.vem === "sim" ? `Pessoas: ${data.pessoas}\n` : "") +
-      (data.obs ? `Obs.: ${data.obs}` : "");
-    window.open(`https://wa.me/${c.whatsapp}?text=${encodeURIComponent(msg)}`, "_blank", "noopener");
-  }
-
-  function onSubmit(e: FormEvent<HTMLFormElement>) {
+  async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    if (sending) return;
     const fd = new FormData(e.currentTarget);
-    const nome = String(fd.get("nome") || "").trim();
-    const vem = String(fd.get("vem") || "");
-    if (!nome) return setError("Escreva seu nome, por favor.");
-    if (!vem) return setError("Conte pra gente se você vem.");
+    const reply: Reply = {
+      nome: String(fd.get("nome") || "").trim(),
+      vem: String(fd.get("vem") || ""),
+      pessoas: String(fd.get("pessoas") || "1"),
+      obs: String(fd.get("obs") || "").trim(),
+    };
+    if (!reply.nome) return setError("Escreva seu nome, por favor.");
+    if (!reply.vem) return setError("Conte pra gente se você vem.");
     setError("");
-    deliver({ nome, vem, pessoas: String(fd.get("pessoas") || "1"), obs: String(fd.get("obs") || "").trim() });
-    setStatus(vem === "sim" ? "yes" : "no");
+    setFallback("");
+    setSending(true);
+    try {
+      const res = await fetch("/api/lorena/rsvp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...reply, website: String(fd.get("website") || "") }),
+      });
+      if (!res.ok) throw new Error(String(res.status));
+      setStatus(reply.vem === "sim" ? "yes" : "no");
+    } catch {
+      setError(c.error);
+      if (c.whatsapp) setFallback(whatsappLink(c.whatsapp, reply));
+    } finally {
+      setSending(false);
+    }
   }
 
   if (status !== "idle") {
@@ -55,7 +77,11 @@ export function RSVPForm() {
   }
 
   return (
-    <form className="lw-form" onSubmit={onSubmit} noValidate aria-describedby={error ? `${uid}-err` : undefined}>
+    <form className="lw-form" onSubmit={onSubmit} noValidate aria-describedby={error ? `${uid}-err` : undefined} aria-busy={sending}>
+      <div className="lw-hp" aria-hidden="true">
+        <label htmlFor={`${uid}-website`}>Não preencha</label>
+        <input id={`${uid}-website`} name="website" type="text" tabIndex={-1} autoComplete="off" />
+      </div>
       <div className="lw-field">
         <label htmlFor={`${uid}-nome`}>{f.name}</label>
         <input id={`${uid}-nome`} name="nome" type="text" autoComplete="name" required />
@@ -96,9 +122,18 @@ export function RSVPForm() {
       <p id={`${uid}-err`} className="lw-form__error" role="alert" aria-live="assertive">
         {error}
       </p>
+      {fallback && (
+        <p className="lw-form__fallback">
+          <a className="lw-link" href={fallback} target="_blank" rel="noopener noreferrer">
+            Enviar a resposta pelo WhatsApp
+          </a>
+        </p>
+      )}
 
       <div className="lw-form__submit">
-        <StationeryButton type="submit">{c.submit}</StationeryButton>
+        <StationeryButton type="submit" disabled={sending}>
+          {sending ? c.sending : c.submit}
+        </StationeryButton>
       </div>
     </form>
   );

@@ -5,6 +5,13 @@
  * empty ("") to hide the related button.
  */
 export const content = {
+  /**
+   * Fase do convite.
+   *  false → "save the date": só o cartão (como o impresso, "em breve, mais detalhes")
+   *  true  → página completa: convite, data, local, fraldas, RSVP e fechamento
+   */
+  showDetails: false,
+
   meta: {
     title: "Brunch de Fraldas da Lorena · 21 de Novembro",
     description: "Save the date — Brunch de Fraldas da Lorena, 21 de Novembro.",
@@ -80,7 +87,13 @@ export const content = {
     submit: "Confirmar presença",
     thanksYes: "Que alegria! Sua presença foi anotada com carinho.",
     thanksNo: "Agradecemos por avisar — vamos sentir sua falta.",
-    /** WhatsApp destino (só números, com DDI). Vazio = só confirma na tela. */
+    sending: "Enviando…",
+    error: "Não conseguimos registrar sua resposta agora. Tente de novo em instantes.",
+    /**
+     * As respostas vão para a planilha do Google configurada em LORENA_RSVP_WEBHOOK
+     * (ver docs/lorena/README.md). WhatsApp (só números, com DDI) é opcional:
+     * se preenchido, vira plano B caso a planilha esteja fora do ar.
+     */
     whatsapp: "",
   },
 

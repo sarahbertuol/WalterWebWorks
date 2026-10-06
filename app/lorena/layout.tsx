@@ -19,14 +19,36 @@ const script = Pinyon_Script({
   display: "swap",
 });
 
+/** Subdomain serving the invitation (e.g. lorena.seudominio.com.br) — see docs/lorena/README.md */
+const host = process.env.LORENA_HOST;
+
+/** Share preview (WhatsApp, iMessage, Instagram DM): the card itself. */
+const shareImage = {
+  url: "/lorena/og.jpg",
+  width: 1200,
+  height: 630,
+  alt: "Save the date — Brunch de Fraldas da Lorena, 21 de Novembro",
+};
+
 export const metadata: Metadata = {
+  ...(host ? { metadataBase: new URL(`https://${host}`) } : {}),
   title: content.meta.title,
   description: content.meta.description,
+  alternates: { canonical: host ? "/" : "/lorena" },
+  robots: { index: false, follow: false },
   openGraph: {
     title: content.meta.title,
     description: content.meta.description,
     type: "website",
     locale: "pt_BR",
+    url: host ? "/" : "/lorena",
+    images: [shareImage],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: content.meta.title,
+    description: content.meta.description,
+    images: [shareImage.url],
   },
 };
 

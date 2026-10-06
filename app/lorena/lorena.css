@@ -955,3 +955,13 @@
   width: clamp(56px, 7vw, 88px);
   transform: translateX(-50%);
 }
+
+/* RSVP: honeypot (off-screen, never focusable) + WhatsApp fallback */
+.lw-hp {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+.lw-form__fallback { margin: -0.6rem 0 0; }

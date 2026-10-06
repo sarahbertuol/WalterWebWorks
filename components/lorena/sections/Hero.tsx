@@ -36,8 +36,11 @@ function SwashTitle({ words }: { words: readonly string[] }) {
   );
 }
 
-/** 01 — the printed invitation, faithfully recomposed for the screen. */
-export function Hero() {
+/**
+ * 01 — the printed invitation, faithfully recomposed for the screen.
+ * `more` = the rest of the page exists below (shows the scroll cue).
+ */
+export function Hero({ more = true }: { more?: boolean }) {
   const h = content.hero;
   return (
     <header className="lw-hero" id="topo">
@@ -116,12 +119,14 @@ export function Hero() {
         </p>
       </div>
 
-      <a href="#convite" className="lw-scroll-cue lw-load" style={d(3200)}>
-        <span className="lw-visually-hidden">Continuar para o convite</span>
-        <svg viewBox="0 0 24 40" aria-hidden="true">
-          <path d="M12 4C11 14 13 22 12 34M5 27c3 3 5 5 7 8 2-3 4-5 7-8" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-      </a>
+      {more && (
+        <a href="#convite" className="lw-scroll-cue lw-load" style={d(3200)}>
+          <span className="lw-visually-hidden">Continuar para o convite</span>
+          <svg viewBox="0 0 24 40" aria-hidden="true">
+            <path d="M12 4C11 14 13 22 12 34M5 27c3 3 5 5 7 8 2-3 4-5 7-8" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </a>
+      )}
     </header>
   );
 }
