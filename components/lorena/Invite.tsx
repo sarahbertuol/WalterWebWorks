@@ -4,6 +4,7 @@ import type { Content } from "@/lib/lorena/content";
 import { IllustrationDefs } from "./illustrations/primitives";
 import { FixedScallopedFrame, StripeBackground, PaperGrain } from "./Frame";
 import { MotionController } from "./MotionController";
+import { ScrollLock } from "./ScrollLock";
 import { Hero, type CityChoice } from "./sections/Hero";
 import { Invitation, TheDate, Details, TheDay, Gifts, Closing } from "./sections/Story";
 import { RSVP } from "./sections/RSVP";
@@ -43,6 +44,7 @@ export function Invite({ content, choices }: { content: Content; choices?: CityC
       <PaperGrain />
       <FixedScallopedFrame />
       <MotionController />
+      {!details && <ScrollLock />}
     </div>
   );
 }
