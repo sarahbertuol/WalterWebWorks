@@ -113,9 +113,12 @@ export function StationeryButton({
   variant = "fill",
   type = "button",
   disabled,
+  external = true,
 }: {
   children: ReactNode;
   href?: string;
+  /** false for links inside the invitation (same tab) */
+  external?: boolean;
   variant?: "fill" | "outline";
   type?: "button" | "submit";
   disabled?: boolean;
@@ -123,7 +126,7 @@ export function StationeryButton({
   const cls = `lw-btn lw-btn--${variant}`;
   if (href) {
     return (
-      <a className={cls} href={href} target="_blank" rel="noopener noreferrer">
+      <a className={cls} href={href} {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}>
         <span>{children}</span>
       </a>
     );

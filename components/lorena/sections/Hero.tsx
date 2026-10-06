@@ -1,7 +1,7 @@
 import type { CSSProperties } from "react";
 import type { Content } from "@/lib/lorena/content";
 import { Illustration } from "../Illustration";
-import { ScriptWord, DecorativeDivider } from "../Type";
+import { ScriptWord, DecorativeDivider, StationeryButton } from "../Type";
 import { Sun } from "../illustrations/Sun";
 import { SparkleLine, PacifierBow, FanFlower, TulipFlower, Flourish } from "../illustrations/Invitation";
 import { FlowerBlossom } from "../illustrations/Flowers";
@@ -36,11 +36,14 @@ function SwashTitle({ words }: { words: readonly string[] }) {
   );
 }
 
+export type CityChoice = { label: string; href: string };
+
 /**
  * 01 — the printed invitation, faithfully recomposed for the screen.
- * `more` = the rest of the page exists below (shows the scroll cue).
+ * `more`    = the rest of the page exists below (shows the scroll cue).
+ * `choices` = root page: city buttons replace the date line.
  */
-export function Hero({ content, more = true }: { content: Content; more?: boolean }) {
+export function Hero({ content, more = true, choices }: { content: Content; more?: boolean; choices?: CityChoice[] }) {
   const h = content.hero;
   return (
     <header className="lw-hero" id="topo">
@@ -111,12 +114,24 @@ export function Hero({ content, more = true }: { content: Content; more?: boolea
         <div className="lw-load" style={d(2300)}>
           <DecorativeDivider variant="heart" reveal={false} className="lw-hero__divider" />
         </div>
-        <p className="lw-hero__date lw-load" style={d(2450)}>
-          {h.day} {h.month}
-        </p>
-        <p className="lw-hero__note lw-load" style={d(2650)}>
-          {h.note}
-        </p>
+        {choices ? (
+          <nav className="lw-hero__choices lw-load" style={d(2450)} aria-label="Escolha sua cidade">
+            {choices.map((c) => (
+              <StationeryButton key={c.href} href={c.href} external={false}>
+                {c.label}
+              </StationeryButton>
+            ))}
+          </nav>
+        ) : (
+          <>
+            <p className="lw-hero__date lw-load" style={d(2450)}>
+              {h.day} {h.month}
+            </p>
+            <p className="lw-hero__note lw-load" style={d(2650)}>
+              {h.note}
+            </p>
+          </>
+        )}
       </div>
 
       {more && (
