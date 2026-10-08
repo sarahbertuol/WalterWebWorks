@@ -4,9 +4,10 @@ Textos: `lib/lorena/content.ts` · Cidades e datas: `lib/lorena/editions.ts` · 
 
 | Endereço | Edição |
 |---|---|
-| `convitelorena.vercel.app` | Caxias do Sul (raiz, link original) |
+| `convitelorena.vercel.app` | cartão com botões: Caxias do Sul · Novo Hamburgo |
 | `convitelorena.vercel.app/caxias-dos-sul` | Caxias do Sul · 21 de Novembro |
 | `convitelorena.vercel.app/novo-hamburgo` | Novo Hamburgo · 12 de Dezembro |
+| `convitelorena.vercel.app/lista-de-presentes` | lista de presentes compartilhada (as duas cidades) |
 
 **Nova cidade:** copie um bloco em `editions.ts`, troque o slug (vira a URL) e os dados, e gere a prévia `public/lorena/og-<slug>.jpg`. Local, endereço, horário, mapa e prazo do RSVP também ficam por cidade em `editions.ts`.
 
@@ -40,6 +41,31 @@ Textos: `lib/lorena/content.ts` · Cidades e datas: `lib/lorena/editions.ts` · 
 
 **Proteções já incluídas:** validação no servidor, campo-isca contra bots, segredo compartilhado, limite de 6 pessoas, e textos que começam com `= + - @` não viram fórmula na planilha.
 **Plano B opcional:** preencha `rsvp.whatsapp` em `content.ts` (só números, com DDI, ex. `5511999999999`). Se a planilha falhar, o convidado vê um botão "Enviar pelo WhatsApp" com a resposta já escrita.
+
+---
+
+## Lista de presentes (~2 min, uma vez)
+
+As marcações ficam num banco **Upstash Redis** (gratuito), ligado à Vercel:
+
+1. **Vercel** → projeto `walterwebworks` → aba **Storage** → **Create Database** → **Upstash for Redis** → plano **Free** → região mais próxima (ex.: São Paulo).
+2. **Connect Project** → `walterwebworks` → marque **Production** e **Preview**. A Vercel cria sozinha `KV_REST_API_URL` e `KV_REST_API_TOKEN`.
+3. **Redeploy** (ou promova o último preview). Pronto.
+
+Sem o banco, a página mostra "A lista está sendo preparada" e não deixa marcar.
+
+**Editar os itens:** `lib/lorena/gifts.ts`
+- `examples: true` mostra o aviso "Itens de exemplo". Troque para `false` ao colocar a lista real.
+- Cada item tem `id` (fixo, nunca mude depois de publicar), `name` e `note` (opcional).
+- Fraldas: `total` = quantidade da meta; `unit` = "pacotes".
+
+**Como funciona para o convidado**
+- Toca no item → fica riscado para todo mundo. Pode desfazer no mesmo celular.
+- Fraldas: escolhe quantos pacotes comprou → "Faltam Y de X" diminui.
+- Duas pessoas no mesmo item ao mesmo tempo: só a primeira vale, e a outra é avisada.
+- Desmarcar o item de outra pessoa pede confirmação ("use só se foi engano").
+
+**Zerar tudo** (antes de divulgar, por exemplo): Vercel → Storage → banco → **Data Browser** → apague a chave `lorena:presentes:v1`.
 
 ---
 

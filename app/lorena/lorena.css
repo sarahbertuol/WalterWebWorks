@@ -1009,3 +1009,103 @@ body:has(.lw--locked) {
   height: 100%;
   min-height: 0;
 }
+
+/* ---------------------------------------------------------------- Gift list */
+
+.lw-gl-page {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: calc(var(--frame) + clamp(28px, 6vh, 64px)) calc(var(--frame) + 18px) calc(var(--frame) + 56px);
+}
+.lw-gl__head { text-align: center; }
+.lw-gl__sun { width: clamp(72px, 16vw, 104px); }
+.lw-gl__spark { width: 18px; margin-top: -24px; }
+.lw-gl__spark--low { margin-top: 10px; }
+.lw-gl__head .lw-hero__sunrow { justify-content: center; gap: 22px; margin-bottom: 14px; }
+.lw-gl__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 7.5vw, 2.9rem);
+  font-weight: 500;
+  line-height: 1.05;
+}
+.lw-gl__da { display: block; font-family: var(--font-script); font-weight: 400; font-size: 0.8em; margin-top: 0.1em; }
+.lw-gl__lorena { display: block; font-size: clamp(3.6rem, 15vw, 5.4rem); line-height: 0.9; margin-top: -0.05em; }
+.lw-gl__intro { margin-top: 1.2rem; font-size: clamp(1.1rem, 4.2vw, 1.3rem); }
+.lw-gl__notice {
+  display: inline-block;
+  margin: 1rem auto 0;
+  padding: 0.45em 1em;
+  border: 1px dashed var(--burgundy);
+  border-radius: 3px;
+  font-style: italic;
+  font-weight: 600;
+  font-size: 1rem;
+  background: var(--ivory);
+}
+
+.lw-gl { display: grid; gap: 28px; }
+.lw-gl .lw-card { transform: none; padding: 34px clamp(22px, 6vw, 40px) 30px; }
+.lw-gl__h {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-indent: 0.3em;
+  text-transform: uppercase;
+  text-align: center;
+}
+.lw-gl__note { margin: 0.5rem 0 0; text-align: center; font-style: italic; font-weight: 500; font-size: 1.05rem; opacity: 0.85; }
+
+.lw-gl__count { margin: 1rem 0 0.6rem; text-align: center; font-size: 1.35rem; font-weight: 500; }
+.lw-gl__count strong { font-size: 1.6em; font-weight: 600; }
+.lw-gl__bar { height: 6px; border-radius: 3px; background: rgba(147, 48, 50, 0.14); overflow: hidden; }
+.lw-gl__bar span { display: block; height: 100%; background: var(--burgundy); border-radius: 3px; transition: width 700ms var(--ease); }
+
+.lw-gl__buy { display: flex; flex-direction: column; align-items: center; gap: 14px; margin-top: 22px; }
+.lw-gl__buy-label { font-family: var(--font-display); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; text-align: center; }
+.lw-gl__stepper { display: inline-flex; align-items: center; border: 1px solid var(--burgundy); border-radius: 3px; background: var(--ivory); }
+.lw-gl__stepper button {
+  width: 48px; height: 48px; border: 0; background: none; color: var(--burgundy);
+  font: 500 1.6rem/1 var(--font-body); cursor: pointer;
+}
+.lw-gl__stepper button:disabled { opacity: 0.35; cursor: default; }
+.lw-gl__stepper output { min-width: 3ch; text-align: center; font-size: 1.4rem; font-weight: 600; }
+.lw-gl__mine { margin: 16px 0 0; text-align: center; font-weight: 500; }
+
+.lw-gl__list { list-style: none; margin: 18px 0 0; padding: 0; }
+.lw-gl__list li + li { border-top: 1px dotted rgba(147, 48, 50, 0.4); }
+.lw-gl__item {
+  display: flex; align-items: center; gap: 14px; width: 100%; min-height: 56px;
+  padding: 12px 2px; border: 0; background: none; color: var(--burgundy);
+  text-align: left; cursor: pointer; font: inherit;
+}
+.lw-gl__item:disabled { cursor: default; }
+.lw-gl__check {
+  flex: none; width: 22px; height: 22px; border: 1.4px solid var(--burgundy);
+  border-radius: 48% 52% 50% 50% / 52% 48% 52% 48%; background: var(--ivory);
+  display: grid; place-items: center;
+}
+.lw-gl__check::after {
+  content: ""; width: 11px; height: 6px; margin-top: -3px;
+  border-left: 2px solid var(--ivory); border-bottom: 2px solid var(--ivory);
+  transform: rotate(-45deg) scale(0); transition: transform 300ms var(--ease);
+}
+.lw-gl__item.is-bought .lw-gl__check { background: var(--burgundy); }
+.lw-gl__item.is-bought .lw-gl__check::after { transform: rotate(-45deg) scale(1); }
+.lw-gl__text { flex: 1; display: grid; gap: 2px; }
+.lw-gl__name { font-size: 1.22rem; font-weight: 500; line-height: 1.25; }
+.lw-gl__item-note { font-size: 0.98rem; font-style: italic; opacity: 0.8; }
+.lw-gl__item.is-bought .lw-gl__text { text-decoration: line-through; text-decoration-thickness: 1.5px; opacity: 0.5; }
+.lw-gl__state { flex: none; font-style: italic; font-size: 0.92rem; opacity: 0.75; text-align: right; max-width: 9em; }
+
+.lw-gl__toast {
+  position: fixed; left: 50%; bottom: calc(var(--frame) + 14px); z-index: 45;
+  transform: translateX(-50%); width: max-content; max-width: calc(100vw - 2 * var(--frame) - 32px);
+  margin: 0; padding: 0.7em 1.2em; border-radius: 3px;
+  background: var(--burgundy); color: var(--ivory); font-weight: 500; text-align: center;
+  box-shadow: 0 10px 24px -14px rgba(118, 88, 74, 0.8);
+}
+.lw-gl__toast:empty { display: none; }
+.lw-gl__back { margin: 34px 0 0; text-align: center; }
