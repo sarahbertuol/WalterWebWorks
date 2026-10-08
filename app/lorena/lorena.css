@@ -20,6 +20,7 @@
   --measure: 34ch;        /* text block width */
   --section-y: clamp(110px, 15vw, 220px);
   --illo-scale: 1;
+  --lw-mottle: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='320' height='320'><filter id='m'><feTurbulence type='fractalNoise' baseFrequency='.02 .06' numOctaves='3' seed='12' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.6 0 0 0 0.7'/></filter><rect width='100%' height='100%' filter='url(%23m)'/></svg>");
 
   /* motion */
   --dur: 1000ms;
@@ -57,7 +58,12 @@
 
 .lw-stripes {
   position: fixed;
-  inset: -10px;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  height: calc(100vh + 20px);
+  height: calc(100lvh + 20px);
+  /* no url() filter here either (same Chrome fixed-element bug) */
   z-index: -2;
   background:
     repeating-linear-gradient(
@@ -65,13 +71,16 @@
       var(--powder-blue) 0 var(--stripe),
       var(--ivory) var(--stripe) calc(var(--stripe) * 2)
     );
-  filter: url(#lw-ruled);
 }
 
 /* fibres + mottling, printed over everything (including type) */
 .lw-grain {
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100vh;
+  height: 100lvh;
   z-index: 40;
   pointer-events: none;
   mix-blend-mode: multiply;
@@ -84,16 +93,22 @@
 /* ---------------------------------------------------------------- Frame */
 
 .lw-frame {
-  position: fixed;
-  inset: 0;
-  z-index: 50;
   pointer-events: none;
-  filter: url(#lw-frame);
 }
 
 .lw-frame__edge {
-  position: absolute;
+  /* each edge is pinned to its own side of the screen, so the bottom border
+     follows the visible bottom when the mobile address bar shows/hides */
+  position: fixed;
+  z-index: 50;
   display: block;
+  pointer-events: none;
+  /* gouache mottling as a static mask image — NOT an SVG url() filter:
+     Chrome paints url()-filtered fixed elements at a stale scroll offset */
+  -webkit-mask-image: var(--lw-mottle);
+  mask-image: var(--lw-mottle);
+  -webkit-mask-size: 320px 320px;
+  mask-size: 320px 320px;
   --scallop: radial-gradient(circle closest-side, var(--burgundy) 96%, transparent 100%);
   --solid: linear-gradient(var(--burgundy), var(--burgundy));
   --paper: linear-gradient(var(--ivory), var(--ivory));
@@ -125,7 +140,9 @@
 .lw-frame__edge--left,
 .lw-frame__edge--right {
   top: var(--margin);
-  bottom: var(--margin);
+  /* tallest possible screen: never ends short when the address bar hides */
+  height: calc(100vh - var(--margin));
+  height: calc(100lvh - var(--margin));
   width: var(--frame);
 }
 .lw-frame__edge--left {
