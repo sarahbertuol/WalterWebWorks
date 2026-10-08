@@ -54,14 +54,16 @@ As marcações ficam num banco **Upstash Redis** (gratuito), ligado à Vercel:
 
 Sem o banco, a página mostra "A lista está sendo preparada" e não deixa marcar.
 
-**Editar os itens:** `lib/lorena/gifts.ts`
-- `examples: true` mostra o aviso "Itens de exemplo". Troque para `false` ao colocar a lista real.
-- Cada item tem `id` (fixo, nunca mude depois de publicar), `name` e `note` (opcional).
-- Fraldas: `total` = quantidade da meta; `unit` = "pacotes".
+**Editar os itens:** `lib/lorena/gifts.ts` — grupos (Fraldas, Banho e troca, Saúde, Alimentação, Para a mamãe) com itens.
+- Cada item: `id` (fixo, nunca mude depois de publicar), `name`, `note` (opcional).
+- `total` = meta. Sem `total`: toque risca o item. Com `total` > 1: a pessoa informa quantos comprou e aparece "faltam X de Y".
+- `unit` = [singular, plural] (pacote/pacotes, caixa/caixas…).
+- Fraldas: Pampers Premium Care, pacote Jumbo — RN 3 · P 8 · M 12 · G 7 pacotes.
+- Para acrescentar um item: copie uma linha do grupo, troque o `id` (novo) e o nome.
 
 **Como funciona para o convidado**
-- Toca no item → fica riscado para todo mundo. Pode desfazer no mesmo celular.
-- Fraldas: escolhe quantos pacotes comprou → "Faltam Y de X" diminui.
+- Item único: toca → fica riscado para todo mundo. Pode desfazer no mesmo celular.
+- Item com meta (fraldas por tamanho, lenços, soro…): toca → escolhe quantos comprou → "faltam X de Y" diminui; o "+" trava na quantidade que falta.
 - Duas pessoas no mesmo item ao mesmo tempo: só a primeira vale, e a outra é avisada.
 - Desmarcar o item de outra pessoa pede confirmação ("use só se foi engano").
 

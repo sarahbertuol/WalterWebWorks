@@ -1109,3 +1109,34 @@ body:has(.lw--locked) {
 }
 .lw-gl__toast:empty { display: none; }
 .lw-gl__back { margin: 34px 0 0; text-align: center; }
+
+/* Gift list v2: grouped, items with a goal open a quantity panel */
+.lw-gl__group { padding-top: 30px; }
+.lw-gl__list li.is-open { background: rgba(147, 48, 50, 0.04); }
+.lw-gl__check--count {
+  font: 600 0.82rem/1 var(--font-body);
+  color: var(--burgundy);
+  font-variant-numeric: lining-nums;
+}
+.lw-gl__item--count.is-bought .lw-gl__check--count::after { transform: rotate(-45deg) scale(1); }
+.lw-gl__item--count:not(.is-bought) .lw-gl__check--count::after { display: none; }
+.lw-gl__progress { display: block; height: 3px; margin-top: 5px; max-width: 220px; border-radius: 2px; background: rgba(147, 48, 50, 0.14); overflow: hidden; }
+.lw-gl__progress span { display: block; height: 100%; background: var(--burgundy); transition: width 700ms var(--ease); }
+.lw-gl__count-line {
+  margin-top: 2px;
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-variant-numeric: lining-nums;
+  text-decoration: none;
+}
+.lw-gl__item--count.is-bought .lw-gl__text { text-decoration: none; opacity: 1; }
+.lw-gl__item--count.is-bought .lw-gl__name,
+.lw-gl__item--count.is-bought .lw-gl__item-note { text-decoration: line-through; text-decoration-thickness: 1.5px; opacity: 0.5; }
+.lw-gl__item--count.is-bought .lw-gl__progress { display: none; }
+.lw-gl__panel { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 4px 4px 20px; }
+.lw-gl__panel .lw-gl__buy { flex-direction: row; flex-wrap: wrap; justify-content: center; margin-top: 0; }
+.lw-gl__panel .lw-btn { min-height: 48px; }
+.lw-gl__panel .lw-gl__mine { margin: 0; }

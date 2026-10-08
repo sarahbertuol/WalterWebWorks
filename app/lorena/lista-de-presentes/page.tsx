@@ -50,7 +50,7 @@ export default function GiftListPage() {
           <DecorativeDivider variant="heart" reveal={false} />
         </header>
 
-        <GiftList diapers={giftList.diapers} items={giftList.items} />
+        <GiftList groups={giftList.groups} />
 
         <p className="lw-gl__back">
           {/* plain <a>: "/" is the invitation only on the convitelorena host (rewrite) */}
