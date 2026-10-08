@@ -74,7 +74,7 @@ export function getContent(slug: EditionSlug) {
       body: "Sua presença já é o presente mais bonito. Se quiser trazer um mimo, a Lorena vai adorar receber fraldas.",
       sizesLabel: "Tamanhos sugeridos",
       sizes: "A confirmar",
-      listUrl: "", // link para lista de presentes, se houver
+      listUrl: "/lista-de-presentes",
       listLabel: "Ver lista de presentes",
     },
 
