@@ -5,7 +5,7 @@ Textos: `lib/lorena/content.ts` · Cidades e datas: `lib/lorena/editions.ts` · 
 | Endereço | Edição |
 |---|---|
 | `convitelorena.vercel.app` | cartão com botões: Caxias do Sul · Novo Hamburgo |
-| `convitelorena.vercel.app/caxias-dos-sul` | Caxias do Sul · 21 de Novembro |
+| `convitelorena.vercel.app/caxias-dos-sul` | Caxias do Sul · 14 de Novembro |
 | `convitelorena.vercel.app/novo-hamburgo` | Novo Hamburgo · 12 de Dezembro |
 | `convitelorena.vercel.app/lista-de-presentes` | lista de presentes compartilhada (as duas cidades) |
 
