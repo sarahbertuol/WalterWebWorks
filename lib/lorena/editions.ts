@@ -7,7 +7,7 @@
 export const editions = {
   "caxias-dos-sul": {
     city: "Caxias do Sul",
-    day: "21",
+    day: "14",
     month: "Novembro",
     time: "A confirmar",
     venue: "[Nome do local]",
