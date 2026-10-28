@@ -44,7 +44,9 @@ export const giftList: { examples: boolean; groups: readonly GiftGroup[] } = {
         { id: "algodao", name: "Algodão em quadradinhos", note: "Pacote grande", total: 4, unit: PACOTE },
         { id: "lencos", name: "Lenços umedecidos", note: "Sem perfume, linha sensitive", total: 6, unit: PACOTE },
         { id: "sabonete", name: "Sabonete líquido de bebê", note: "Hipoalergênico, sem perfume forte", total: 2, unit: FRASCO },
-        { id: "hidratante", name: "Hidratante de bebê", note: "Sem perfume" },
+        { id: "shampoo", name: "Shampoo de bebê", note: "Natura Mamãe e Bebê ou Mustela recém-nascido" },
+        { id: "condicionador", name: "Condicionador de bebê", note: "Natura Mamãe e Bebê" },
+        { id: "hidratante", name: "Hidratante de bebê", note: "Natura Mamãe e Bebê ou Mustela Hydra Bebê" },
       ],
     },
     {
@@ -72,6 +74,51 @@ export const giftList: { examples: boolean; groups: readonly GiftGroup[] } = {
         { id: "lanolina", name: "Pomada de lanolina para mamilos", note: "Tipo Lansinoh" },
         { id: "absorvente-seios", name: "Absorvente para seios", total: 2, unit: CAIXA },
         { id: "absorvente-pos-parto", name: "Absorvente pós-parto", note: "Noturno", total: 3, unit: PACOTE },
+      ],
+    },
+  ],
+};
+
+/**
+ * "Produtos de preferência" — popup na lista, com links para ver o produto.
+ * Links de produto de farmácia podem sair do ar quando a loja troca o cadastro:
+ * se um quebrar, troque a URL ou use uma busca do Google (googleLink).
+ */
+export type PreferredLink = { label: string; url: string };
+export type PreferredProduct = { name: string; note?: string; links: readonly PreferredLink[] };
+export type PreferredGroup = { title: string; note?: string; items: readonly PreferredProduct[] };
+
+const googleLink = (q: string): PreferredLink => ({ label: "Google", url: `https://www.google.com/search?q=${encodeURIComponent(q)}` });
+
+export const preferred: { title: string; intro: string; groups: readonly PreferredGroup[] } = {
+  title: "Produtos de preferência",
+  intro: "Se for comprar algum destes, estas são as marcas que a gente prefere. Toque no link para ver o produto.",
+  groups: [
+    {
+      title: "Fraldas",
+      items: [{ name: "Pampers Premium Care", note: "Pacote Jumbo", links: [googleLink("Pampers Premium Care Jumbo")] }],
+    },
+    {
+      title: "Shampoo, condicionador e hidratante",
+      note: "Natura Mamãe e Bebê ou Mustela, linha recém-nascido.",
+      items: [
+        { name: "Natura Mamãe e Bebê · Shampoo", note: "Vendido pela Natura e consultoras", links: [googleLink("Natura Mamãe e Bebê shampoo")] },
+        { name: "Natura Mamãe e Bebê · Condicionador", links: [googleLink("Natura Mamãe e Bebê condicionador")] },
+        { name: "Natura Mamãe e Bebê · Hidratante", links: [googleLink("Natura Mamãe e Bebê hidratante")] },
+        {
+          name: "Mustela · Shampoo Espuma Recém-Nascido",
+          links: [
+            { label: "Drogasil", url: "https://www.drogasil.com.br/shampoo-espuma-recem-nascido-mustela-150ml-1384032.html" },
+            { label: "Droga Raia", url: "https://www.drogaraia.com.br/shampoo-espuma-recem-nascido-mustela-150ml-1384032.html" },
+          ],
+        },
+        {
+          name: "Mustela · Hidratante Hydra Bebê",
+          links: [
+            { label: "Panvel", url: "https://www.panvel.com/panvel/locao-hidratante-corporal-mustela-hydra-bebe-300ml/p-541520" },
+            { label: "Drogasil", url: "https://www.drogasil.com.br/mustela-hydra-bebe-300ml-647474.html" },
+          ],
+        },
       ],
     },
   ],

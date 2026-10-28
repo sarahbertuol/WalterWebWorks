@@ -1,7 +1,7 @@
 import type { CSSProperties } from "react";
 import type { Metadata } from "next";
 import { cssTokens } from "@/lib/lorena/tokens";
-import { giftList } from "@/lib/lorena/gifts";
+import { giftList, preferred } from "@/lib/lorena/gifts";
 import { inviteMetadata } from "@/lib/lorena/metadata";
 import { defaultEdition } from "@/lib/lorena/editions";
 import { IllustrationDefs } from "@/components/lorena/illustrations/primitives";
@@ -10,6 +10,7 @@ import { DecorativeDivider, ScriptWord, SectionTitle } from "@/components/lorena
 import { Sun } from "@/components/lorena/illustrations/Sun";
 import { SparkleLine } from "@/components/lorena/illustrations/Invitation";
 import { GiftList } from "@/components/lorena/GiftList";
+import { PreferredProducts } from "@/components/lorena/PreferredProducts";
 
 /** convitelorena.vercel.app/lista-de-presentes */
 const title = "Lista de presentes · Brunch de Fraldas da Lorena";
@@ -46,6 +47,7 @@ export default function GiftListPage() {
             Sua presença já é o presente mais bonito. Se quiser trazer um mimo, marque aqui o que você comprou — não precisa se
             identificar, é só para ninguém repetir.
           </p>
+          <PreferredProducts data={preferred} />
           {giftList.examples && <p className="lw-gl__notice">Itens de exemplo — a lista oficial entra em breve.</p>}
           <DecorativeDivider variant="heart" reveal={false} />
         </header>
