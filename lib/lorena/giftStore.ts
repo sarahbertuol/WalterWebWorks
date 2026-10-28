@@ -5,17 +5,35 @@ import { createClient } from "redis";
  *  1. Upstash REST (KV_REST_API_URL / KV_REST_API_TOKEN, or UPSTASH_REDIS_REST_*)
  *  2. plain Redis connection string (REDIS_URL / KV_URL) — what some Vercel
  *     Marketplace databases provide instead of REST
+ * Names may carry the custom prefix Vercel offers when connecting a database
+ * (e.g. convitelorena_KV_REST_API_URL) — both forms work.
  *
  * One Redis hash: field = item id, value = units marked as bought.
  */
 const KEY = "lorena:presentes:v1";
 
-function restCreds() {
-  const url = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
-  const token = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
-  return url && token ? { url, token } : null;
+/** `NAME` or `<prefix>_NAME`; returns the prefix too so URL and token come from the same database. */
+function findEnv(name: string): { prefix: string; value: string } | null {
+  const exact = process.env[name];
+  if (exact) return { prefix: "", value: exact };
+  for (const [k, v] of Object.entries(process.env)) {
+    if (v && k.endsWith(`_${name}`)) return { prefix: k.slice(0, -name.length), value: v };
+  }
+  return null;
 }
-const redisUrl = () => process.env.REDIS_URL || process.env.KV_URL || "";
+
+function restCreds() {
+  for (const [urlName, tokenName] of [
+    ["KV_REST_API_URL", "KV_REST_API_TOKEN"],
+    ["UPSTASH_REDIS_REST_URL", "UPSTASH_REDIS_REST_TOKEN"],
+  ]) {
+    const url = findEnv(urlName);
+    const token = url && process.env[url.prefix + tokenName];
+    if (url && token) return { url: url.value, token };
+  }
+  return null;
+}
+const redisUrl = () => findEnv("REDIS_URL")?.value || findEnv("KV_URL")?.value || "";
 
 export const giftStoreConfigured = () => restCreds() !== null || redisUrl() !== "";
 
