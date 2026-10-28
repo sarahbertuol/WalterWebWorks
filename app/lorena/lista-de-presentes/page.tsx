@@ -43,8 +43,8 @@ export default function GiftListPage() {
             <ScriptWord className="lw-gl__lorena">Lorena</ScriptWord>
           </h1>
           <p className="lw-prose lw-gl__intro">
-            Sua presença já é o presente mais bonito. Se quiser trazer um mimo, marque aqui o que você comprou — não precisa se
-            identificar, é só para ninguém repetir.
+            Sua presença já é o presente mais bonito. Se quiser trazer um mimo, toque em “Comprei” no
+            que você escolheu — não precisa se identificar, é só para ninguém repetir.
           </p>
           {giftList.examples && <p className="lw-gl__notice">Itens de exemplo — a lista oficial entra em breve.</p>}
           <DecorativeDivider variant="heart" reveal={false} />

@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import type { Gift, GiftGroup } from "@/lib/lorena/gifts";
+import { ExamplesDialog } from "./ExamplesDialog";
 
 type Claims = Record<string, number>;
 type Load = "loading" | "ready" | "offline";
@@ -28,19 +29,21 @@ function writeMine(m: Claims) {
 const unitOf = (g: Gift, n: number) => (g.unit ?? DEFAULT_UNIT)[n === 1 ? 0 : 1];
 
 /**
- * The shared, anonymous gift list.
- * Single items: tap = bought (struck through for everyone).
- * Items with a goal (diapers per size, wipes…): open the row, pick how many
- * you bought, and "faltam X de Y" goes down.
+ * The shared, anonymous gift list — three columns per row:
+ *   Faltam (how many are still needed) · Produto (+ "ver exemplos") · Comprei.
+ * "Comprei" takes 1 off (or asks how many, for items with a quantity);
+ * the row is struck through for everyone only when it reaches 0.
+ * Whoever marked something can undo it from the same phone.
  */
 export function GiftList({ groups }: { groups: readonly GiftGroup[] }) {
   const [claims, setClaims] = useState<Claims>({});
   const [mine, setMine] = useState<Claims>({});
   const [load, setLoad] = useState<Load>("loading");
   const [busy, setBusy] = useState<string | null>(null);
-  const [open, setOpen] = useState<string | null>(null);
+  const [picking, setPicking] = useState<string | null>(null);
   const [qty, setQty] = useState(1);
   const [toast, setToast] = useState("");
+  const [examples, setExamples] = useState<Gift | null>(null);
 
   const refresh = useCallback(async () => {
     try {
@@ -107,31 +110,28 @@ export function GiftList({ groups }: { groups: readonly GiftGroup[] }) {
     }
   }
 
-  function toggleSingle(g: Gift) {
-    const bought = (claims[g.id] ?? 0) > 0;
-    if (!bought) return mark(g.id, 1, `“${g.name}” marcado. Obrigada pelo carinho!`);
-    if ((mine[g.id] ?? 0) > 0) return mark(g.id, -1, `“${g.name}” desmarcado.`);
-    if (window.confirm(`“${g.name}” já foi marcado por outra pessoa. Desmarcar mesmo assim? (Use só se foi engano.)`)) {
+  function buy(g: Gift, left: number) {
+    // one left (or a single item): no question to ask
+    if (left === 1) return mark(g.id, 1, `“${g.name}” anotado. Obrigada pelo carinho!`);
+    setPicking((p) => (p === g.id ? null : g.id));
+    setQty(1);
+  }
+
+  function undo(g: Gift, n: number) {
+    return mark(g.id, -n, `“${g.name}”: desfeito.`);
+  }
+
+  /** Someone else's mark on a single item: allowed, but only on purpose. */
+  function undoOther(g: Gift) {
+    if (window.confirm(`“${g.name}” foi marcado por outra pessoa. Desmarcar mesmo assim? (Use só se foi engano.)`)) {
       return mark(g.id, -1, `“${g.name}” desmarcado.`);
     }
   }
 
-  function openRow(id: string) {
-    setOpen((o) => (o === id ? null : id));
-    setQty(1);
-  }
-
   const ready = load === "ready";
-  const label = (g: Gift, groupTitle: string) => (groupTitle === "Fraldas" ? `Fraldas ${g.name}` : g.name);
 
   return (
     <div className="lw-gl" aria-busy={load === "loading"}>
-      {load === "offline" && (
-        <p className="lw-gl__notice" role="status">
-          A lista está sendo preparada. Volte em instantes para marcar seu presente.
-        </p>
-      )}
-
       {groups.map((group) => (
         <section key={group.id} className="lw-card lw-gl__group" aria-labelledby={`gl-${group.id}`}>
           <h2 id={`gl-${group.id}`} className="lw-gl__h">
@@ -139,108 +139,107 @@ export function GiftList({ groups }: { groups: readonly GiftGroup[] }) {
           </h2>
           {group.note && <p className="lw-gl__note">{group.note}</p>}
 
+          <div className="lw-gl__cols" aria-hidden="true">
+            <span>Faltam</span>
+            <span>Produto</span>
+            <span />
+          </div>
+
           <ul className="lw-gl__list">
             {group.items.map((g) => {
               const total = g.total ?? 1;
               const given = Math.min(total, claims[g.id] ?? 0);
-              const left = total - given;
-              const myCount = mine[g.id] ?? 0;
-              const done = left === 0;
-
-              if (total === 1) {
-                return (
-                  <li key={g.id}>
-                    <button
-                      type="button"
-                      className={`lw-gl__item${done ? " is-bought" : ""}`}
-                      aria-pressed={done}
-                      disabled={!ready || busy !== null}
-                      onClick={() => toggleSingle(g)}
-                    >
-                      <span className="lw-gl__check" aria-hidden="true" />
-                      <span className="lw-gl__text">
-                        <span className="lw-gl__name">{g.name}</span>
-                        {g.note && <span className="lw-gl__item-note">{g.note}</span>}
-                      </span>
-                      <span className="lw-gl__state">{done ? (myCount > 0 ? "você marcou · desfazer" : "comprado") : ""}</span>
-                    </button>
-                  </li>
-                );
-              }
-
-              const isOpen = open === g.id;
+              const left = ready ? total - given : total;
+              const myCount = Math.min(mine[g.id] ?? 0, given);
+              const done = ready && left === 0;
+              const isPicking = picking === g.id && !done;
               const pick = Math.min(Math.max(1, qty), Math.max(1, left));
               const panelId = `gl-panel-${g.id}`;
-              return (
-                <li key={g.id} className={isOpen ? "is-open" : undefined}>
-                  <button
-                    type="button"
-                    className={`lw-gl__item lw-gl__item--count${done ? " is-bought" : ""}`}
-                    aria-expanded={isOpen}
-                    aria-controls={panelId}
-                    disabled={!ready}
-                    onClick={() => openRow(g.id)}
-                  >
-                    <span className="lw-gl__check lw-gl__check--count" aria-hidden="true">
-                      {done ? "" : left}
-                    </span>
-                    <span className="lw-gl__text">
-                      <span className="lw-gl__name">{g.name}</span>
-                      {g.note && <span className="lw-gl__item-note">{g.note}</span>}
-                      <span className="lw-gl__count-line">
-                        {ready ? (done ? "completo" : `faltam ${left} de ${total} ${unitOf(g, total)}`) : `meta: ${total} ${unitOf(g, total)}`}
-                      </span>
-                      <span className="lw-gl__progress" aria-hidden="true">
-                        <span style={{ width: `${ready ? (given / total) * 100 : 0}%` }} />
-                      </span>
-                    </span>
-                  </button>
 
-                  {isOpen && (
+              return (
+                <li key={g.id} className={`lw-gl__row${done ? " is-done" : ""}${isPicking ? " is-open" : ""}`}>
+                  <span className="lw-gl__qty" aria-label={done ? "Completo" : `Faltam ${left} de ${total}`}>
+                    {done ? (
+                      <span className="lw-gl__tick" aria-hidden="true" />
+                    ) : (
+                      <>
+                        <strong>{left}</strong>
+                        {total > 1 && <small>de {total}</small>}
+                      </>
+                    )}
+                  </span>
+
+                  <span className="lw-gl__text">
+                    <span className="lw-gl__name">{g.name}</span>
+                    {g.note && <span className="lw-gl__item-note">{g.note}</span>}
+                    {myCount > 0 && !done && total > 1 && (
+                      <span className="lw-gl__mine-line">
+                        você marcou {myCount} {unitOf(g, myCount)}
+                      </span>
+                    )}
+                    {g.examples && g.examples.length > 0 && (
+                      <button type="button" className="lw-gl__ex" onClick={() => setExamples(g)}>
+                        ver exemplos
+                      </button>
+                    )}
+                  </span>
+
+                  <span className="lw-gl__act">
+                    {!done && (
+                      <button
+                        type="button"
+                        className="lw-gl__buy-btn"
+                        disabled={!ready || busy !== null}
+                        aria-expanded={total > 1 && left > 1 ? isPicking : undefined}
+                        aria-controls={total > 1 && left > 1 ? panelId : undefined}
+                        onClick={() => buy(g, left)}
+                      >
+                        Comprei
+                      </button>
+                    )}
+                    {done && myCount === 0 && total === 1 && (
+                      <button type="button" className="lw-gl__state" disabled={busy !== null} onClick={() => undoOther(g)}>
+                        comprado
+                      </button>
+                    )}
+                    {done && myCount === 0 && total > 1 && <span className="lw-gl__state">completo</span>}
+                    {myCount > 0 && (
+                      <button type="button" className="lw-gl__undo" disabled={busy !== null} onClick={() => undo(g, myCount)}>
+                        desfazer
+                      </button>
+                    )}
+                  </span>
+
+                  {isPicking && (
                     <div className="lw-gl__panel" id={panelId}>
-                      {!done && (
-                        <>
-                          <span className="lw-gl__buy-label" id={`${panelId}-q`}>
-                            Quantos {unitOf(g, 2)} você comprou?
-                          </span>
-                          <div className="lw-gl__buy">
-                            <div className="lw-gl__stepper" role="group" aria-labelledby={`${panelId}-q`}>
-                              <button type="button" onClick={() => setQty(Math.max(1, pick - 1))} disabled={pick <= 1} aria-label="Menos um">
-                                −
-                              </button>
-                              <output aria-live="polite">{pick}</output>
-                              <button type="button" onClick={() => setQty(Math.min(left, pick + 1))} disabled={pick >= left} aria-label="Mais um">
-                                +
-                              </button>
-                            </div>
-                            <button
-                              type="button"
-                              className="lw-btn lw-btn--fill"
-                              disabled={busy !== null}
-                              onClick={async () => {
-                                const ok = await mark(g.id, pick, `${label(g, group.title)}: ${pick} ${unitOf(g, pick)} anotado${pick === 1 ? "" : "s"}. Obrigada!`);
-                                if (ok) setQty(1);
-                              }}
-                            >
-                              <span>Comprei</span>
-                            </button>
-                          </div>
-                        </>
-                      )}
-                      {done && myCount === 0 && <p className="lw-gl__mine">Esse já está completo — obrigada a todos!</p>}
-                      {myCount > 0 && (
-                        <p className="lw-gl__mine">
-                          Você marcou {myCount} {unitOf(g, myCount)}.{" "}
-                          <button
-                            type="button"
-                            className="lw-link"
-                            disabled={busy !== null}
-                            onClick={() => mark(g.id, -myCount, `${label(g, group.title)}: desmarcado.`)}
-                          >
-                            Desfazer
+                      <span className="lw-gl__buy-label" id={`${panelId}-q`}>
+                        Quantos {unitOf(g, 2)} você comprou?
+                      </span>
+                      <div className="lw-gl__buy">
+                        <div className="lw-gl__stepper" role="group" aria-labelledby={`${panelId}-q`}>
+                          <button type="button" onClick={() => setQty(Math.max(1, pick - 1))} disabled={pick <= 1} aria-label="Menos um">
+                            −
                           </button>
-                        </p>
-                      )}
+                          <output aria-live="polite">{pick}</output>
+                          <button type="button" onClick={() => setQty(Math.min(left, pick + 1))} disabled={pick >= left} aria-label="Mais um">
+                            +
+                          </button>
+                        </div>
+                        <button
+                          type="button"
+                          className="lw-btn lw-btn--fill"
+                          disabled={busy !== null}
+                          onClick={async () => {
+                            const ok = await mark(g.id, pick, `${g.name}: ${pick} ${unitOf(g, pick)} anotado${pick === 1 ? "" : "s"}. Obrigada!`);
+                            if (ok) setPicking(null);
+                          }}
+                        >
+                          <span>Confirmar</span>
+                        </button>
+                      </div>
+                      <button type="button" className="lw-link" onClick={() => setPicking(null)}>
+                        cancelar
+                      </button>
                     </div>
                   )}
                 </li>
@@ -249,6 +248,8 @@ export function GiftList({ groups }: { groups: readonly GiftGroup[] }) {
           </ul>
         </section>
       ))}
+
+      <ExamplesDialog gift={examples} onClose={() => setExamples(null)} />
 
       <p className="lw-gl__toast" role="status" aria-live="polite">
         {toast}
