@@ -132,12 +132,6 @@ export function GiftList({ groups }: { groups: readonly GiftGroup[] }) {
 
   return (
     <div className="lw-gl" aria-busy={load === "loading"}>
-      {load === "offline" && (
-        <p className="lw-gl__notice" role="status">
-          A lista está sendo preparada. Volte em instantes para marcar seu presente.
-        </p>
-      )}
-
       {groups.map((group) => (
         <section key={group.id} className="lw-card lw-gl__group" aria-labelledby={`gl-${group.id}`}>
           <h2 id={`gl-${group.id}`} className="lw-gl__h">

@@ -52,7 +52,7 @@ As marcações ficam num banco **Upstash Redis** (gratuito), ligado à Vercel:
 2. **Connect Project** → `walterwebworks` → marque **Production** e **Preview**. A Vercel cria sozinha `KV_REST_API_URL` e `KV_REST_API_TOKEN`.
 3. **Redeploy** (ou promova o último preview). Pronto.
 
-Sem o banco, a página mostra "A lista está sendo preparada" e não deixa marcar.
+Sem o banco, a lista aparece mas os botões "Comprei" ficam apagados (não deixa marcar).
 
 **Editar os itens:** `lib/lorena/gifts.ts` — grupos (Fraldas, Banho e troca, Saúde, Alimentação, Para a mamãe) com itens.
 - Cada item: `id` (fixo, nunca mude depois de publicar), `name`, `note` (opcional).
