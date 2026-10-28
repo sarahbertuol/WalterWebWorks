@@ -58,7 +58,7 @@ Sem o banco, a página mostra "A lista está sendo preparada" e não deixa marca
 - Cada item: `id` (fixo, nunca mude depois de publicar), `name`, `note` (opcional).
 - `total` = meta. Sem `total`: toque risca o item. Com `total` > 1: a pessoa informa quantos comprou e aparece "faltam X de Y".
 - `unit` = [singular, plural] (pacote/pacotes, caixa/caixas…).
-- Fraldas: Pampers Premium Care, pacote Jumbo — RN 3 · P 8 · M 12 · G 7 pacotes.
+- Fraldas: Pampers Premium Care, pacote Jumbo — P 8 · M 12 · G 7 pacotes.
 - Para acrescentar um item: copie uma linha do grupo, troque o `id` (novo) e o nome.
 
 **Como funciona para o convidado**

@@ -32,7 +32,6 @@ export const giftList: { examples: boolean; groups: readonly GiftGroup[] } = {
       title: "Fraldas",
       note: "Pampers Premium Care · pacote Jumbo, por favor — assim a conta fecha certinho.",
       items: [
-        { id: "fralda-rn", name: "Tamanho RN", total: 3, unit: PACOTE },
         { id: "fralda-p", name: "Tamanho P", total: 8, unit: PACOTE },
         { id: "fralda-m", name: "Tamanho M", total: 12, unit: PACOTE },
         { id: "fralda-g", name: "Tamanho G", total: 7, unit: PACOTE },
@@ -42,23 +41,17 @@ export const giftList: { examples: boolean; groups: readonly GiftGroup[] } = {
       id: "banho",
       title: "Banho e troca",
       items: [
-        { id: "pomada-zinco", name: "Pomada para assaduras (barreira)", note: "Óxido de zinco — Hipoglós Original ou Desitin", total: 2, unit: UNIDADE },
-        { id: "pomada-bepantol", name: "Pomada para assaduras (prevenção)", note: "Bepantol Baby", total: 2, unit: UNIDADE },
         { id: "algodao", name: "Algodão em quadradinhos", note: "Pacote grande", total: 4, unit: PACOTE },
         { id: "lencos", name: "Lenços umedecidos", note: "Sem perfume, linha sensitive", total: 6, unit: PACOTE },
         { id: "sabonete", name: "Sabonete líquido de bebê", note: "Hipoalergênico, sem perfume forte", total: 2, unit: FRASCO },
         { id: "hidratante", name: "Hidratante de bebê", note: "Sem perfume" },
-        { id: "termometro-banho", name: "Termômetro de banho" },
       ],
     },
     {
       id: "saude",
       title: "Saúde",
       items: [
-        { id: "termometro-digital", name: "Termômetro digital", note: "De axila" },
-        { id: "soro", name: "Soro fisiológico 0,9%", note: "Caixinha de flaconetes", total: 3, unit: CAIXA },
         { id: "aspirador-nasal", name: "Aspirador nasal" },
-        { id: "alcool-70", name: "Álcool 70% líquido", note: "Para o coto umbilical" },
         { id: "kit-unhas", name: "Kit unhas", note: "Tesourinha ponta redonda ou cortador + lixa" },
         { id: "escova-cabelo", name: "Escova de cabelo", note: "Cerdas bem macias" },
       ],
