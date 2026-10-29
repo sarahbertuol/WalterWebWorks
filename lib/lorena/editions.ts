@@ -9,7 +9,7 @@ export const editions = {
     city: "Caxias do Sul",
     day: "14",
     month: "Novembro",
-    time: "A confirmar",
+    time: "11h às 16h",
     venue: "[Nome do local]",
     address: "[Endereço completo]",
     mapUrl: "", // ex.: "https://maps.google.com/?q=..."
@@ -19,7 +19,7 @@ export const editions = {
     city: "Novo Hamburgo",
     day: "12",
     month: "Dezembro",
-    time: "A confirmar",
+    time: "11h às 16h",
     venue: "[Nome do local]",
     address: "[Endereço completo]",
     mapUrl: "",

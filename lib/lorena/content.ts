@@ -21,7 +21,7 @@ export function getContent(slug: EditionSlug) {
 
     meta: {
       title: `Brunch de Fraldas da Lorena · ${e.day} de ${e.month}`,
-      description: `Save the date — Brunch de Fraldas da Lorena, ${e.day} de ${e.month}.`,
+      description: `Save the date — Brunch de Fraldas da Lorena, ${e.day} de ${e.month}, ${e.time}.`,
     },
 
     hero: {
@@ -31,7 +31,11 @@ export function getContent(slug: EditionSlug) {
       name: "Lorena",
       day: e.day,
       month: e.month,
-      note: "em breve, mais detalhes",
+      time: e.time,
+      note: "endereço em breve",
+      /** botão no cartão; "" esconde */
+      giftsUrl: "/lista-de-presentes",
+      giftsLabel: "Lista de presentes",
     },
 
     invitation: {
@@ -46,7 +50,7 @@ export function getContent(slug: EditionSlug) {
       day: e.day,
       month: e.month,
       note: "Guarde este dia no calendário e no coração.",
-      time: e.time === "A confirmar" ? "Horário a confirmar" : e.time,
+      time: (e.time as string) === "A confirmar" ? "Horário a confirmar" : e.time,
     },
 
     details: {

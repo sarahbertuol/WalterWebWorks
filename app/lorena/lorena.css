@@ -547,6 +547,32 @@
   letter-spacing: 0.12em;
 }
 
+/* City card: time, "endereço em breve" and the gift-list button under the date */
+.lw-hero__time {
+  margin: calc(0.9 * var(--u)) 0 0;
+  font-family: var(--font-display);
+  font-size: calc(2 * var(--u));
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-indent: 0.22em;
+  text-transform: uppercase;
+}
+.lw-hero__time + .lw-hero__note { margin-top: calc(1.1 * var(--u)); }
+.lw-hero__gifts { margin-top: calc(2.4 * var(--u)); }
+.lw-hero__gifts .lw-btn {
+  min-height: max(46px, calc(6 * var(--u)));
+  padding: calc(1.5 * var(--u)) calc(3.4 * var(--u));
+  font-size: max(0.72rem, calc(1.5 * var(--u)));
+}
+/* the extra lines need more height units so the card still fits one screen */
+.lw-hero:has(.lw-hero__gifts) {
+  --u: min(calc((100vh - 2 * var(--frame)) / 114), 1.5vw);
+  --u: min(calc((100svh - 2 * var(--frame)) / 114), 1.5vw);
+}
+@media (max-width: 720px) {
+  .lw-hero:has(.lw-hero__gifts) { --u: min(calc((100svh - 2 * var(--frame)) / 114), 1.72vw); }
+}
+
 .lw-scroll-cue {
   position: absolute;
   bottom: calc(var(--frame) + 12px);

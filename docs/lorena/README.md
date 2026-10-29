@@ -1,12 +1,12 @@
 # Lorena — convite digital · SOP
 
-Textos: `lib/lorena/content.ts` · Cidades e datas: `lib/lorena/editions.ts` · Fase atual: **save the date** (`showDetails: false`)
+Textos: `lib/lorena/content.ts` · Cidades, datas e horário: `lib/lorena/editions.ts` · Fase atual: **save the date** (`showDetails: false`) com horário, "endereço em breve" e botão da lista no cartão (`hero` em `content.ts`)
 
 | Endereço | Edição |
 |---|---|
 | `convitelorena.vercel.app` | cartão com botões: Caxias do Sul · Novo Hamburgo |
-| `convitelorena.vercel.app/caxias-dos-sul` | Caxias do Sul · 14 de Novembro |
-| `convitelorena.vercel.app/novo-hamburgo` | Novo Hamburgo · 12 de Dezembro |
+| `convitelorena.vercel.app/caxias-dos-sul` | Caxias do Sul · 14 de Novembro · 11h às 16h |
+| `convitelorena.vercel.app/novo-hamburgo` | Novo Hamburgo · 12 de Dezembro · 11h às 16h |
 | `convitelorena.vercel.app/lista-de-presentes` | lista de presentes compartilhada (as duas cidades) |
 
 **Nova cidade:** copie um bloco em `editions.ts`, troque o slug (vira a URL) e os dados, e gere a prévia `public/lorena/og-<slug>.jpg`. Local, endereço, horário, mapa e prazo do RSVP também ficam por cidade em `editions.ts`.

@@ -127,9 +127,19 @@ export function Hero({ content, more = true, choices }: { content: Content; more
             <p className="lw-hero__date lw-load" style={d(2450)}>
               {h.day} {h.month}
             </p>
+            <p className="lw-hero__time lw-load" style={d(2550)}>
+              {h.time}
+            </p>
             <p className="lw-hero__note lw-load" style={d(2650)}>
               {h.note}
             </p>
+            {h.giftsUrl && (
+              <div className="lw-hero__gifts lw-load" style={d(2850)}>
+                <StationeryButton href={h.giftsUrl} external={false}>
+                  {h.giftsLabel}
+                </StationeryButton>
+              </div>
+            )}
           </>
         )}
       </div>
