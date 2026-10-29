@@ -108,6 +108,7 @@ export const giftList: { examples: boolean; groups: readonly GiftGroup[] } = {
       items: [
         { id: "mamadeira", name: "Mamadeira anticólica", total: 2, unit: UNIDADE },
         { id: "chupeta", name: "Chupeta / bico anticólica" },
+        { id: "clipe-chupeta", name: "Clipe para bico", note: "Prendedor de chupeta" },
         { id: "escova-mamadeira", name: "Escova para limpar mamadeira" },
         { id: "babadores", name: "Babadores", total: 4, unit: UNIDADE },
         { id: "leite-materno", name: "Saquinhos para leite materno", note: "Para congelar o leite", total: 2, unit: CAIXA },
