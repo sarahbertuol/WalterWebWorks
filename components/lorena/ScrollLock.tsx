@@ -27,11 +27,13 @@ export function ScrollLock() {
     body.style.height = "100%";
     window.scrollTo(0, 0);
 
+    // popups (RSVP, agenda) scroll on their own
+    const inPopup = (e: Event) => e.target instanceof Element && e.target.closest("dialog[open]") !== null;
     const stopDrag = (e: TouchEvent) => {
-      if (e.touches.length === 1) e.preventDefault();
+      if (e.touches.length === 1 && !inPopup(e)) e.preventDefault();
     };
     const stopWheel = (e: WheelEvent) => {
-      if (!e.ctrlKey) e.preventDefault(); // ctrl+wheel = zoom, leave it
+      if (!e.ctrlKey && !inPopup(e)) e.preventDefault(); // ctrl+wheel = zoom, leave it
     };
     const keepTop = () => {
       if (window.scrollY !== 0) window.scrollTo(0, 0);

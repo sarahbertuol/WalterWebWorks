@@ -1,4 +1,5 @@
-import { editions, type EditionSlug } from "./editions";
+import { editions, mapUrl, type EditionSlug } from "./editions";
+import { googleCalendarUrl, icsPath } from "./calendar";
 
 /**
  * Lorena — editable copy, shared by every city edition.
@@ -32,10 +33,19 @@ export function getContent(slug: EditionSlug) {
       day: e.day,
       month: e.month,
       time: e.time,
+      /** local e endereço; sem endereço, mostra `note` */
+      venue: e.venue,
+      address: e.address as string,
+      mapUrl: mapUrl(e),
+      mapLabel: "ver no mapa",
       note: "endereço em breve",
-      /** botão no cartão; "" esconde */
+      /** botões do cartão; "" esconde */
+      rsvpLabel: "Confirmar presença",
+      rsvpDeadline: `confirme até ${e.rsvpDeadline}`,
       giftsUrl: "/lista-de-presentes",
       giftsLabel: "Lista de presentes",
+      calendarLabel: "Salvar na agenda",
+      calendar: { google: googleCalendarUrl(e), ics: icsPath(slug) },
     },
 
     invitation: {
@@ -62,7 +72,7 @@ export function getContent(slug: EditionSlug) {
         { term: "Local", value: e.venue },
         { term: "Endereço", value: e.address },
       ],
-      mapUrl: e.mapUrl as string,
+      mapUrl: mapUrl(e),
       mapLabel: "Ver no mapa",
     },
 

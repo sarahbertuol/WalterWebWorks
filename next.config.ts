@@ -18,7 +18,9 @@ const nextConfig: NextConfig = {
           { source: "/", has, destination: "/lorena" },
           // one path per city edition: /caxias-dos-sul, /novo-hamburgo …
           { source: `/:cidade(${editionSlugs.join("|")})`, has, destination: "/lorena/:cidade" },
+          { source: `/:cidade(${editionSlugs.join("|")})/agenda`, has, destination: "/lorena/:cidade/agenda" },
           { source: "/lista-de-presentes", has, destination: "/lorena/lista-de-presentes" },
+          { source: "/confirmados", has, destination: "/lorena/confirmados" },
         ];
       }),
       afterFiles: [],

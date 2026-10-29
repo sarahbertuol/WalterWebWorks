@@ -5,6 +5,7 @@ import { ScriptWord, DecorativeDivider, StationeryButton } from "../Type";
 import { Sun } from "../illustrations/Sun";
 import { SparkleLine, PacifierBow, FanFlower, TulipFlower, Flourish } from "../illustrations/Invitation";
 import { FlowerBlossom } from "../illustrations/Flowers";
+import { CardActions } from "../CardActions";
 
 const d = (ms: number) => ({ "--delay": `${ms}ms` }) as CSSProperties;
 
@@ -130,16 +131,25 @@ export function Hero({ content, more = true, choices }: { content: Content; more
             <p className="lw-hero__time lw-load" style={d(2550)}>
               {h.time}
             </p>
-            <p className="lw-hero__note lw-load" style={d(2650)}>
-              {h.note}
+            <p className="lw-hero__note lw-hero__place lw-load" style={d(2650)}>
+              {h.address ? (
+                <>
+                  <span>
+                    {h.venue} · {h.address}
+                  </span>
+                  {h.mapUrl && (
+                    <a className="lw-hero__map" href={h.mapUrl} target="_blank" rel="noopener noreferrer">
+                      {h.mapLabel}
+                    </a>
+                  )}
+                </>
+              ) : (
+                h.note
+              )}
             </p>
-            {h.giftsUrl && (
-              <div className="lw-hero__gifts lw-load" style={d(2850)}>
-                <StationeryButton href={h.giftsUrl} external={false}>
-                  {h.giftsLabel}
-                </StationeryButton>
-              </div>
-            )}
+            <div className="lw-load" style={d(2850)}>
+              <CardActions content={content} />
+            </div>
           </>
         )}
       </div>

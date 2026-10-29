@@ -106,3 +106,30 @@ export async function claim(id: string, delta: number, max: number): Promise<{ v
     : ((await (await tcpClient()).eval(CLAIM, { keys: [KEY], arguments: [id, String(delta), String(max)] })) as [number, number]);
   return { value: Number(value), applied: Number(applied) === 1 };
 }
+
+/* ---------- RSVP replies (same database, one list) ---------- */
+
+const RSVP_KEY = "lorena:rsvp:v1";
+
+export type RsvpEntry = { em: string; cidade: string; nome: string; vem: "sim" | "nao"; pessoas: number; obs: string };
+
+async function command<T>(args: string[]): Promise<T> {
+  if (restCreds()) return rest<T>(args);
+  return (await (await tcpClient()).sendCommand(args)) as T;
+}
+
+export async function rsvpAdd(entry: RsvpEntry): Promise<void> {
+  await command(["RPUSH", RSVP_KEY, JSON.stringify(entry)]);
+}
+
+/** Every reply, oldest first. */
+export async function rsvpAll(): Promise<RsvpEntry[]> {
+  const raw = (await command<string[]>(["LRANGE", RSVP_KEY, "0", "-1"])) ?? [];
+  return raw.flatMap((r) => {
+    try {
+      return [JSON.parse(r) as RsvpEntry];
+    } catch {
+      return [];
+    }
+  });
+}
