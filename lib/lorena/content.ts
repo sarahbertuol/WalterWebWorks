@@ -1,4 +1,5 @@
-import { editions, type EditionSlug } from "./editions";
+import { editions, mapUrl, type EditionSlug } from "./editions";
+import { googleCalendarUrl, icsPath } from "./calendar";
 
 /**
  * Lorena — editable copy, shared by every city edition.
@@ -21,7 +22,7 @@ export function getContent(slug: EditionSlug) {
 
     meta: {
       title: `Brunch de Fraldas da Lorena · ${e.day} de ${e.month}`,
-      description: `Save the date — Brunch de Fraldas da Lorena, ${e.day} de ${e.month}.`,
+      description: `Save the date — Brunch de Fraldas da Lorena, ${e.day} de ${e.month}, ${e.time}.`,
     },
 
     hero: {
@@ -31,7 +32,20 @@ export function getContent(slug: EditionSlug) {
       name: "Lorena",
       day: e.day,
       month: e.month,
-      note: "em breve, mais detalhes",
+      time: e.time,
+      /** local e endereço; sem endereço, mostra `note` */
+      venue: e.venue,
+      address: e.address as string,
+      mapUrl: mapUrl(e),
+      mapLabel: "ver no mapa",
+      note: "endereço em breve",
+      /** botões do cartão; "" esconde */
+      rsvpLabel: "Confirmar presença",
+      rsvpDeadline: `confirme até ${e.rsvpDeadline}`,
+      giftsUrl: "/lista-de-presentes",
+      giftsLabel: "Lista de presentes",
+      calendarLabel: "Salvar na agenda",
+      calendar: { google: googleCalendarUrl(e), ics: icsPath(slug) },
     },
 
     invitation: {
@@ -46,7 +60,7 @@ export function getContent(slug: EditionSlug) {
       day: e.day,
       month: e.month,
       note: "Guarde este dia no calendário e no coração.",
-      time: e.time === "A confirmar" ? "Horário a confirmar" : e.time,
+      time: (e.time as string) === "A confirmar" ? "Horário a confirmar" : e.time,
     },
 
     details: {
@@ -58,7 +72,7 @@ export function getContent(slug: EditionSlug) {
         { term: "Local", value: e.venue },
         { term: "Endereço", value: e.address },
       ],
-      mapUrl: e.mapUrl as string,
+      mapUrl: mapUrl(e),
       mapLabel: "Ver no mapa",
     },
 

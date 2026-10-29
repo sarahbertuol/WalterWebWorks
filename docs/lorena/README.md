@@ -1,19 +1,32 @@
 # Lorena — convite digital · SOP
 
-Textos: `lib/lorena/content.ts` · Cidades e datas: `lib/lorena/editions.ts` · Fase atual: **save the date** (`showDetails: false`)
+Textos: `lib/lorena/content.ts` · Cidades, datas, horário, local e prazo do RSVP: `lib/lorena/editions.ts` · Fase atual: **save the date** (`showDetails: false`) com horário, "endereço em breve" e botão da lista no cartão (`hero` em `content.ts`)
 
 | Endereço | Edição |
 |---|---|
 | `convitelorena.vercel.app` | cartão com botões: Caxias do Sul · Novo Hamburgo |
-| `convitelorena.vercel.app/caxias-dos-sul` | Caxias do Sul · 14 de Novembro |
-| `convitelorena.vercel.app/novo-hamburgo` | Novo Hamburgo · 12 de Dezembro |
+| `convitelorena.vercel.app/caxias-dos-sul` | Caxias do Sul · 14 de Novembro · 11h às 16h |
+| `convitelorena.vercel.app/novo-hamburgo` | Novo Hamburgo · 12 de Dezembro · 11h às 16h |
 | `convitelorena.vercel.app/lista-de-presentes` | lista de presentes compartilhada (as duas cidades) |
+| `convitelorena.vercel.app/<cidade>/agenda` | arquivo de agenda (.ics) da cidade — usado pelo botão "Salvar na agenda" |
+| `convitelorena.vercel.app/confirmados?chave=…` | privado: quem confirmou presença (ver seção 1) |
 
 **Nova cidade:** copie um bloco em `editions.ts`, troque o slug (vira a URL) e os dados, e gere a prévia `public/lorena/og-<slug>.jpg`. Local, endereço, horário, mapa e prazo do RSVP também ficam por cidade em `editions.ts`.
 
 ---
 
-## 1. RSVP → Google Sheets (~15 min, uma vez)
+## 1. Confirmações de presença (RSVP)
+
+O botão **Confirmar presença** do cartão abre o formulário. As respostas ficam salvas no mesmo banco da lista de presentes. Não precisa configurar mais nada para salvar.
+
+**Ver quem confirmou:** `convitelorena.vercel.app/confirmados?chave=SUA-CHAVE`
+1. **Vercel** → projeto do convite → *Settings → Environments → Production → Add Environment Variable*.
+2. Nome `LORENA_ADMIN_KEY`, valor = uma senha longa (só letras e números, 8+ caracteres) → **Save** → **Redeploy**.
+3. Abra o link acima com a sua chave e salve nos favoritos. A página mostra o total de pessoas por cidade, a lista e o botão **Baixar planilha (CSV)**, que abre no Excel ou no Google Planilhas.
+- Se a mesma pessoa responder duas vezes, vale a última resposta. A anterior aparece riscada.
+- Prazo de confirmação: `rsvpDeadline` em `editions.ts`.
+
+**Opcional: copiar cada resposta também para uma Google Sheet**
 
 1. **Planilha** — crie uma Google Sheet (ex.: *Brunch Lorena — RSVP*).
 2. **Script** — na planilha: *Extensões → Apps Script*. Apague o conteúdo e cole `docs/lorena/rsvp-apps-script.gs`.

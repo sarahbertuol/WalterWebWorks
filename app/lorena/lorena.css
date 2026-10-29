@@ -547,6 +547,58 @@
   letter-spacing: 0.12em;
 }
 
+/* City card: time, "endereço em breve" and the gift-list button under the date */
+.lw-hero__time {
+  margin: calc(0.9 * var(--u)) 0 0;
+  font-family: var(--font-display);
+  font-size: calc(2 * var(--u));
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-indent: 0.22em;
+  text-transform: uppercase;
+}
+.lw-hero__time + .lw-hero__note { margin-top: calc(1.1 * var(--u)); }
+.lw-hero__place {
+  display: grid; justify-items: center; gap: calc(0.4 * var(--u));
+  max-width: 34ch; margin-inline: auto;
+  letter-spacing: 0.04em; line-height: 1.35;
+}
+.lw-hero__map {
+  color: var(--burgundy); font-weight: 600;
+  text-decoration: underline; text-decoration-color: var(--butter-yellow);
+  text-decoration-thickness: 1.5px; text-underline-offset: 4px;
+}
+.lw-hero__actions { display: grid; justify-items: center; margin-top: calc(2.2 * var(--u)); }
+.lw-hero__actions .lw-btn {
+  min-height: max(44px, calc(5.6 * var(--u)));
+  padding: calc(1.3 * var(--u)) calc(2.6 * var(--u));
+  font-size: max(0.66rem, calc(1.4 * var(--u)));
+}
+.lw-hero__rsvp { min-width: min(100%, calc(34 * var(--u))); }
+.lw-hero__deadline {
+  margin: calc(0.8 * var(--u)) 0 0;
+  font-style: italic; font-size: max(0.88rem, calc(1.6 * var(--u)));
+}
+.lw-hero__more {
+  display: flex; flex-wrap: wrap; justify-content: center;
+  gap: 8px calc(1.2 * var(--u)); margin-top: calc(1.6 * var(--u));
+}
+.lw-hero__more .lw-btn { padding-inline: calc(1.6 * var(--u)); letter-spacing: 0.14em; text-indent: 0.14em; }
+/* the extra lines need more height units so the card still fits one screen */
+.lw-hero:has(.lw-hero__actions) {
+  --u: min(calc((100vh - 2 * var(--frame)) / 142), 1.5vw);
+  --u: min(calc((100svh - 2 * var(--frame)) / 142), 1.5vw);
+}
+@media (max-width: 720px) {
+  .lw-hero:has(.lw-hero__actions) { --u: min(calc((100svh - 2 * var(--frame)) / 142), 1.72vw); }
+  .lw-hero__more .lw-btn { font-size: 0.6rem; padding-inline: 12px; letter-spacing: 0.1em; text-indent: 0.1em; }
+}
+/* popups opened from the card */
+.lw-pp--card .lw-gl__h { padding-inline: 34px; }
+.lw-pp__form { margin-top: 18px; text-align: left; }
+.lw-pp__form .lw-form { gap: 1.2rem; }
+.lw-pp__choices { display: grid; gap: 12px; margin-top: 22px; }
+
 .lw-scroll-cue {
   position: absolute;
   bottom: calc(var(--frame) + 12px);
@@ -1254,3 +1306,16 @@ button.lw-gl__state { cursor: pointer; }
   .lw-pp .lw-gl__name { font-size: 1.4rem; }
   .lw-pp__links .lw-link { font-size: 1.12rem; }
 }
+
+/* Private "confirmados" page */
+.lw-adm { max-width: 920px; }
+.lw-adm__title { margin: 0 0 1rem; text-align: center; font-family: var(--font-display); font-weight: 500; font-size: clamp(2.2rem, 6vw, 3.2rem); }
+.lw-adm__actions { margin: 0 0 28px; text-align: center; }
+.lw-adm__city { margin-bottom: 28px; padding: 30px clamp(18px, 4vw, 40px); transform: none; }
+.lw-adm__totals { margin: 0.6rem 0 1rem; text-align: center; font-size: 1.2rem; }
+.lw-adm__totals strong { font-size: 1.6em; font-weight: 600; }
+.lw-adm__scroll { overflow-x: auto; }
+.lw-adm__table { width: 100%; border-collapse: collapse; font-size: 1.05rem; }
+.lw-adm__table th { padding: 8px 10px; text-align: left; font-family: var(--font-display); font-size: 0.66rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; border-bottom: 1px solid var(--burgundy); }
+.lw-adm__table td { padding: 10px; border-bottom: 1px dotted rgba(147, 48, 50, 0.4); vertical-align: top; }
+.lw-adm__table tr.is-old { opacity: 0.4; text-decoration: line-through; }
