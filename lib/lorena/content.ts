@@ -26,7 +26,8 @@ export function getContent(slug: EditionSlug) {
     },
 
     hero: {
-      eyebrow: ["Save", "the Date"],
+      /** título acima do chupetinha; [] esconde (ex.: ["Save", "the Date"]) */
+      eyebrow: [] as string[],
       title: ["Brunch", "de", "Fraldas"],
       connector: "da",
       name: "Lorena",
