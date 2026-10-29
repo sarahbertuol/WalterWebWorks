@@ -83,6 +83,9 @@ export const giftList: { examples: boolean; groups: readonly GiftGroup[] } = {
         { id: "algodao", name: "Algodão em quadradinhos", note: "Pacote grande", total: 4, unit: PACOTE },
         { id: "garrafa-termica", name: "Garrafa térmica de pressão", note: "Para esquentar a água dos algodões" },
         { id: "lencos", name: "Lenços umedecidos", note: "Sem perfume, linha sensitive", total: 6, unit: PACOTE },
+        { id: "fraldas-pano", name: "Fraldas de pano / boquinhas", note: "Pacote com 5 ou 6", total: 3, unit: PACOTE },
+        { id: "toalha", name: "Toalha de banho de algodão", total: 2, unit: UNIDADE },
+        { id: "trocador-portatil", name: "Trocador portátil", note: "Para levar na bolsa" },
         { id: "sabonete", name: "Sabonete líquido de bebê", note: "Hipoalergênico, sem perfume forte", total: 2, unit: FRASCO },
         { id: "shampoo", name: "Shampoo de bebê", note: "Natura ou Mustela", examplesNote: NATURA_OU_MUSTELA, examples: [ex.naturaShampoo, ex.mustelaShampoo] },
         { id: "condicionador", name: "Condicionador de bebê", note: "Natura Mamãe e Bebê", examples: [ex.naturaCondicionador] },
@@ -105,6 +108,16 @@ export const giftList: { examples: boolean; groups: readonly GiftGroup[] } = {
         { id: "mamadeira", name: "Mamadeira anticólica", total: 2, unit: UNIDADE },
         { id: "chupeta", name: "Chupeta / bico anticólica" },
         { id: "escova-mamadeira", name: "Escova para limpar mamadeira" },
+        { id: "babadores", name: "Babadores", total: 4, unit: UNIDADE },
+        { id: "leite-materno", name: "Saquinhos para leite materno", note: "Para congelar o leite", total: 2, unit: CAIXA },
+      ],
+    },
+    {
+      id: "sono",
+      title: "Sono",
+      items: [
+        { id: "saco-dormir", name: "Saco de dormir ou cueiro", note: "Algodão, para recém-nascido" },
+        { id: "manta", name: "Manta leve de algodão" },
       ],
     },
     {
@@ -114,6 +127,9 @@ export const giftList: { examples: boolean; groups: readonly GiftGroup[] } = {
         { id: "mordedor", name: "Mordedor", note: "Silicone, sem BPA" },
         { id: "livrinhos", name: "Livrinhos de bebê", note: "De pano, de banho ou com contraste preto e branco", total: 2, unit: LIVRO },
         { id: "brinquedo-educativo", name: "Brinquedo educativo", note: "Para 0 a 6 meses — chocalho, cores e texturas" },
+        { id: "tapete-atividades", name: "Tapete de atividades", note: "Com arco de brinquedos (ginásio)" },
+        { id: "mobile", name: "Móbile para o berço" },
+        { id: "chocalho", name: "Chocalho", total: 2, unit: UNIDADE },
       ],
     },
     {
