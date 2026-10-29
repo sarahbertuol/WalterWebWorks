@@ -1188,3 +1188,69 @@ body:has(.lw--locked) {
 .lw-gl__state { opacity: 0.7; }
 button.lw-gl__state { cursor: pointer; }
 .lw-gl__undo { cursor: pointer; text-decoration: underline; text-decoration-color: var(--butter-yellow); text-decoration-thickness: 1.5px; text-underline-offset: 4px; }
+
+/* Gift list: sticky category tabs (mobile + desktop) */
+.lw-gt {
+  position: sticky;
+  top: calc(var(--frame) + 6px);
+  z-index: 20;
+  margin: 0 0 22px;
+}
+.lw-gt__bar {
+  display: flex; gap: 6px;
+  margin: 0; padding: 6px; list-style: none;
+  overflow-x: auto; scrollbar-width: none; overscroll-behavior-x: contain;
+  background: var(--ivory);
+  border-radius: 4px;
+  box-shadow: 0 0 0 1.5px var(--burgundy), 0 10px 22px -16px rgba(60, 20, 20, 0.6);
+}
+.lw-gt__bar::-webkit-scrollbar { display: none; }
+.lw-gt__bar li { flex: none; }
+.lw-gt__tab {
+  display: block; padding: 0.75em 1em; border-radius: 3px;
+  color: var(--burgundy); text-decoration: none; white-space: nowrap;
+  font-family: var(--font-display); font-size: 0.66rem; font-weight: 600;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  transition: background-color 300ms var(--ease), color 300ms var(--ease);
+}
+.lw-gt__tab.is-active { background: var(--burgundy); color: var(--ivory); }
+.lw-gl__group { scroll-margin-top: calc(var(--frame) + 76px); }
+
+/* Gift list: desktop — bigger type and blocks (mobile untouched) */
+@media (min-width: 900px) {
+  .lw-gl-page { max-width: 920px; }
+  .lw-gl__sun { width: 124px; }
+  .lw-gl__title { font-size: 4.2rem; }
+  .lw-gl__lorena { font-size: 7.6rem; }
+  .lw-gl__intro { max-width: 40ch; margin-left: auto; margin-right: auto; font-size: 1.5rem; }
+
+  .lw-gt { margin-bottom: 34px; }
+  .lw-gt__bar { justify-content: center; padding: 8px; }
+  .lw-gt__tab { font-size: 0.8rem; padding: 0.85em 1.3em; }
+  .lw-gl__group { scroll-margin-top: calc(var(--frame) + 96px); }
+
+  .lw-gl { gap: 40px; }
+  .lw-gl .lw-card { width: 100%; padding: 52px 64px 44px; }
+  .lw-gl__h { font-size: 1rem; }
+  .lw-gl__note { font-size: 1.25rem; }
+  .lw-gl__cols,
+  .lw-gl__row { grid-template-columns: 76px minmax(0, 1fr) auto; column-gap: 24px; }
+  .lw-gl__cols { margin-top: 28px; font-size: 0.74rem; }
+  .lw-gl__row { padding: 20px 0; }
+  .lw-gl__qty { min-height: 72px; }
+  .lw-gl__qty strong { font-size: 1.9rem; }
+  .lw-gl__qty small { font-size: 0.95rem; }
+  .lw-gl__tick { width: 20px; height: 10px; }
+  .lw-gl__name { font-size: 1.55rem; }
+  .lw-gl__item-note { font-size: 1.15rem; }
+  .lw-gl__mine-line, .lw-gl__ex { font-size: 1.12rem; }
+  .lw-gl__buy-btn { min-height: 54px; padding: 0 26px; font-size: 0.8rem; letter-spacing: 0.18em; }
+  .lw-gl__state, .lw-gl__undo { font-size: 1.1rem; }
+  .lw-gl__buy-label { font-size: 0.82rem; }
+  .lw-gl__stepper output { font-size: 1.7rem; }
+
+  .lw-pp { width: min(680px, calc(100vw - 64px)); }
+  .lw-pp__title { font-size: 2.1rem; }
+  .lw-pp .lw-gl__name { font-size: 1.4rem; }
+  .lw-pp__links .lw-link { font-size: 1.12rem; }
+}

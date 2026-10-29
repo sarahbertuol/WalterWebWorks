@@ -133,7 +133,7 @@ export function GiftList({ groups }: { groups: readonly GiftGroup[] }) {
   return (
     <div className="lw-gl" aria-busy={load === "loading"}>
       {groups.map((group) => (
-        <section key={group.id} className="lw-card lw-gl__group" aria-labelledby={`gl-${group.id}`}>
+        <section key={group.id} id={group.id} className="lw-card lw-gl__group" aria-labelledby={`gl-${group.id}`}>
           <h2 id={`gl-${group.id}`} className="lw-gl__h">
             {group.title}
           </h2>
