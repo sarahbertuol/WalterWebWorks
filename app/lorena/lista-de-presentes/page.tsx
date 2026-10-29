@@ -51,7 +51,7 @@ export default function GiftListPage() {
           <DecorativeDivider variant="heart" reveal={false} />
         </header>
 
-        <GiftTabs groups={giftList.groups.map(({ id, title }) => ({ id, title }))} />
+        <GiftTabs groups={giftList.groups.map(({ id, title, tab }) => ({ id, title: tab ?? title }))} />
         <GiftList groups={giftList.groups} />
 
         <p className="lw-gl__back">

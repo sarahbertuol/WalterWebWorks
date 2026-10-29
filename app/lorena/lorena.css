@@ -1277,7 +1277,8 @@ button.lw-gl__state { cursor: pointer; }
   .lw-gl__intro { max-width: 40ch; margin-left: auto; margin-right: auto; font-size: 1.5rem; }
 
   .lw-gt { margin-bottom: 34px; }
-  .lw-gt__bar { justify-content: safe center; gap: 2px; padding: 8px 6px; }
+  /* all tabs visible on desktop: wrap to a second line if a long name ever needs it */
+  .lw-gt__bar { flex-wrap: wrap; justify-content: center; gap: 2px; padding: 8px 6px; }
   .lw-gt__tab { font-size: 0.74rem; padding: 0.85em 0.85em; letter-spacing: 0.12em; }
   .lw-gl__group { scroll-margin-top: calc(var(--frame) + 96px); }
 

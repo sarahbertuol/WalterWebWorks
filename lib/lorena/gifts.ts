@@ -21,7 +21,8 @@ export type Gift = {
   examplesNote?: string;
   examples?: readonly Example[];
 };
-export type GiftGroup = { id: string; title: string; note?: string; items: readonly Gift[] };
+/** `tab` = nome curto na barra de categorias (opcional; senão usa `title`) */
+export type GiftGroup = { id: string; title: string; tab?: string; note?: string; items: readonly Gift[] };
 
 const PACOTE = ["pacote", "pacotes"] as const;
 const UNIDADE = ["unidade", "unidades"] as const;
@@ -110,19 +111,22 @@ export const giftList: { examples: boolean; groups: readonly GiftGroup[] } = {
         { id: "escova-mamadeira", name: "Escova para limpar mamadeira" },
         { id: "babadores", name: "Babadores", total: 4, unit: UNIDADE },
         { id: "leite-materno", name: "Saquinhos para leite materno", note: "Para congelar o leite", total: 2, unit: CAIXA },
+        { id: "recipiente-leite", name: "Recipiente para guardar leite", note: "Potinhos com tampa, sem BPA" },
       ],
     },
     {
       id: "sono",
-      title: "Sono",
+      title: "Sono e passeio",
       items: [
         { id: "saco-dormir", name: "Saco de dormir ou cueiro", note: "Algodão, para recém-nascido" },
         { id: "manta", name: "Manta leve de algodão" },
+        { id: "mosquiteiro", name: "Mosquiteiro para carrinho" },
       ],
     },
     {
       id: "brincar",
       title: "Brincar e descobrir",
+      tab: "Brincar",
       items: [
         { id: "mordedor", name: "Mordedor", note: "Silicone, sem BPA" },
         { id: "livrinhos", name: "Livrinhos de bebê", note: "De pano, de banho ou com contraste preto e branco", total: 2, unit: LIVRO },
