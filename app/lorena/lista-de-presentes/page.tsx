@@ -10,6 +10,7 @@ import { DecorativeDivider, ScriptWord, SectionTitle } from "@/components/lorena
 import { Sun } from "@/components/lorena/illustrations/Sun";
 import { SparkleLine } from "@/components/lorena/illustrations/Invitation";
 import { GiftList } from "@/components/lorena/GiftList";
+import { GiftTabs } from "@/components/lorena/GiftTabs";
 
 /** convitelorena.vercel.app/lista-de-presentes */
 const title = "Lista de presentes · Brunch de Fraldas da Lorena";
@@ -50,6 +51,7 @@ export default function GiftListPage() {
           <DecorativeDivider variant="heart" reveal={false} />
         </header>
 
+        <GiftTabs groups={giftList.groups.map(({ id, title }) => ({ id, title }))} />
         <GiftList groups={giftList.groups} />
 
         <p className="lw-gl__back">
