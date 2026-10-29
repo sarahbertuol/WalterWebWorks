@@ -586,11 +586,11 @@
 .lw-hero__more .lw-btn { padding-inline: calc(1.6 * var(--u)); letter-spacing: 0.14em; text-indent: 0.14em; }
 /* the extra lines need more height units so the card still fits one screen */
 .lw-hero:has(.lw-hero__actions) {
-  --u: min(calc((100vh - 2 * var(--frame)) / 142), 1.5vw);
-  --u: min(calc((100svh - 2 * var(--frame)) / 142), 1.5vw);
+  --u: min(calc((100vh - 2 * var(--frame)) / 126), 1.5vw);
+  --u: min(calc((100svh - 2 * var(--frame)) / 126), 1.5vw);
 }
 @media (max-width: 720px) {
-  .lw-hero:has(.lw-hero__actions) { --u: min(calc((100svh - 2 * var(--frame)) / 142), 1.72vw); }
+  .lw-hero:has(.lw-hero__actions) { --u: min(calc((100svh - 2 * var(--frame)) / 126), 1.72vw); }
   .lw-hero__more .lw-btn { font-size: 0.6rem; padding-inline: 12px; letter-spacing: 0.1em; text-indent: 0.1em; }
 }
 /* popups opened from the card */
@@ -1277,8 +1277,9 @@ button.lw-gl__state { cursor: pointer; }
   .lw-gl__intro { max-width: 40ch; margin-left: auto; margin-right: auto; font-size: 1.5rem; }
 
   .lw-gt { margin-bottom: 34px; }
-  .lw-gt__bar { justify-content: center; padding: 8px; }
-  .lw-gt__tab { font-size: 0.8rem; padding: 0.85em 1.3em; }
+  /* all tabs visible on desktop: wrap to a second line if a long name ever needs it */
+  .lw-gt__bar { flex-wrap: wrap; justify-content: center; gap: 2px; padding: 8px 6px; }
+  .lw-gt__tab { font-size: 0.74rem; padding: 0.85em 0.85em; letter-spacing: 0.12em; }
   .lw-gl__group { scroll-margin-top: calc(var(--frame) + 96px); }
 
   .lw-gl { gap: 40px; }
@@ -1319,3 +1320,20 @@ button.lw-gl__state { cursor: pointer; }
 .lw-adm__table th { padding: 8px 10px; text-align: left; font-family: var(--font-display); font-size: 0.66rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; border-bottom: 1px solid var(--burgundy); }
 .lw-adm__table td { padding: 10px; border-bottom: 1px dotted rgba(147, 48, 50, 0.4); vertical-align: top; }
 .lw-adm__table tr.is-old { opacity: 0.4; text-decoration: line-through; }
+
+/* City card without "Save the date": the details under "Lorena" read bigger */
+.lw-hero:has(.lw-hero__actions) .lw-hero__date { font-size: calc(4.1 * var(--u)); }
+.lw-hero:has(.lw-hero__actions) .lw-hero__time { font-size: calc(2.6 * var(--u)); margin-top: calc(1 * var(--u)); }
+.lw-hero:has(.lw-hero__actions) .lw-hero__place { font-size: max(1.08rem, calc(2.35 * var(--u))); max-width: 30ch; }
+.lw-hero:has(.lw-hero__actions) .lw-hero__deadline { font-size: max(1rem, calc(2 * var(--u))); }
+.lw-hero:has(.lw-hero__actions) .lw-hero__actions .lw-btn { font-size: max(0.74rem, calc(1.65 * var(--u))); min-height: max(48px, calc(6.2 * var(--u))); }
+@media (max-width: 720px) {
+  .lw-hero:has(.lw-hero__actions) .lw-hero__more .lw-btn { font-size: 0.66rem; }
+}
+@media (min-width: 900px) {
+  .lw-hero:has(.lw-hero__actions) .lw-hero__date { font-size: calc(4.6 * var(--u)); }
+  .lw-hero:has(.lw-hero__actions) .lw-hero__time { font-size: calc(3 * var(--u)); }
+  .lw-hero:has(.lw-hero__actions) .lw-hero__place { font-size: max(1.3rem, calc(2.6 * var(--u))); }
+  .lw-hero:has(.lw-hero__actions) .lw-hero__deadline { font-size: 1.2rem; }
+  .lw-hero:has(.lw-hero__actions) .lw-hero__actions .lw-btn { font-size: 0.86rem; min-height: 54px; padding-inline: 26px; }
+}

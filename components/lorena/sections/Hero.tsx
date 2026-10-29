@@ -77,10 +77,12 @@ export function Hero({ content, more = true, choices }: { content: Content; more
         </div>
 
         <h1 className="lw-hero__title">
-          <span className="lw-std lw-load" style={d(700)}>
-            <SwashTitle words={h.eyebrow} />
-            <Flourish className="lw-std__flourish" />
-          </span>
+          {h.eyebrow.length > 0 && (
+            <span className="lw-std lw-load" style={d(700)}>
+              <SwashTitle words={h.eyebrow} />
+              <Flourish className="lw-std__flourish" />
+            </span>
+          )}
 
           {/* pacifier between the two flowers */}
           <span className="lw-hero__vignette lw-load" style={d(1000)} aria-hidden="true">

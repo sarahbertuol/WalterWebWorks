@@ -21,12 +21,14 @@ export type Gift = {
   examplesNote?: string;
   examples?: readonly Example[];
 };
-export type GiftGroup = { id: string; title: string; note?: string; items: readonly Gift[] };
+/** `tab` = nome curto na barra de categorias (opcional; senão usa `title`) */
+export type GiftGroup = { id: string; title: string; tab?: string; note?: string; items: readonly Gift[] };
 
 const PACOTE = ["pacote", "pacotes"] as const;
 const UNIDADE = ["unidade", "unidades"] as const;
 const CAIXA = ["caixa", "caixas"] as const;
 const FRASCO = ["frasco", "frascos"] as const;
+const LIVRO = ["livrinho", "livrinhos"] as const;
 
 /**
  * Links de produto de farmácia podem sair do ar quando a loja troca o cadastro:
@@ -82,6 +84,9 @@ export const giftList: { examples: boolean; groups: readonly GiftGroup[] } = {
         { id: "algodao", name: "Algodão em quadradinhos", note: "Pacote grande", total: 4, unit: PACOTE },
         { id: "garrafa-termica", name: "Garrafa térmica de pressão", note: "Para esquentar a água dos algodões" },
         { id: "lencos", name: "Lenços umedecidos", note: "Sem perfume, linha sensitive", total: 6, unit: PACOTE },
+        { id: "fraldas-pano", name: "Fraldas de pano / boquinhas", note: "Pacote com 5 ou 6", total: 3, unit: PACOTE },
+        { id: "toalha", name: "Toalha de banho de algodão", total: 2, unit: UNIDADE },
+        { id: "trocador-portatil", name: "Trocador portátil", note: "Para levar na bolsa" },
         { id: "sabonete", name: "Sabonete líquido de bebê", note: "Hipoalergênico, sem perfume forte", total: 2, unit: FRASCO },
         { id: "shampoo", name: "Shampoo de bebê", note: "Natura ou Mustela", examplesNote: NATURA_OU_MUSTELA, examples: [ex.naturaShampoo, ex.mustelaShampoo] },
         { id: "condicionador", name: "Condicionador de bebê", note: "Natura Mamãe e Bebê", examples: [ex.naturaCondicionador] },
@@ -103,7 +108,33 @@ export const giftList: { examples: boolean; groups: readonly GiftGroup[] } = {
       items: [
         { id: "mamadeira", name: "Mamadeira anticólica", total: 2, unit: UNIDADE },
         { id: "chupeta", name: "Chupeta / bico anticólica" },
+        { id: "clipe-chupeta", name: "Clipe para bico", note: "Prendedor de chupeta" },
         { id: "escova-mamadeira", name: "Escova para limpar mamadeira" },
+        { id: "babadores", name: "Babadores", total: 4, unit: UNIDADE },
+        { id: "leite-materno", name: "Saquinhos para leite materno", note: "Para congelar o leite", total: 2, unit: CAIXA },
+        { id: "recipiente-leite", name: "Recipiente para guardar leite", note: "Potinhos com tampa, sem BPA" },
+      ],
+    },
+    {
+      id: "sono",
+      title: "Sono e passeio",
+      items: [
+        { id: "saco-dormir", name: "Saco de dormir ou cueiro", note: "Algodão, para recém-nascido" },
+        { id: "manta", name: "Manta leve de algodão" },
+        { id: "mosquiteiro", name: "Mosquiteiro para carrinho" },
+      ],
+    },
+    {
+      id: "brincar",
+      title: "Brincar e descobrir",
+      tab: "Brincar",
+      items: [
+        { id: "mordedor", name: "Mordedor", note: "Silicone, sem BPA" },
+        { id: "livrinhos", name: "Livrinhos de bebê", note: "De pano, de banho ou com contraste preto e branco", total: 2, unit: LIVRO },
+        { id: "brinquedo-educativo", name: "Brinquedo educativo", note: "Para 0 a 6 meses — chocalho, cores e texturas" },
+        { id: "tapete-atividades", name: "Tapete de atividades", note: "Com arco de brinquedos (ginásio)" },
+        { id: "mobile", name: "Móbile para o berço" },
+        { id: "chocalho", name: "Chocalho", total: 2, unit: UNIDADE },
       ],
     },
     {
