@@ -27,6 +27,7 @@ const PACOTE = ["pacote", "pacotes"] as const;
 const UNIDADE = ["unidade", "unidades"] as const;
 const CAIXA = ["caixa", "caixas"] as const;
 const FRASCO = ["frasco", "frascos"] as const;
+const LIVRO = ["livrinho", "livrinhos"] as const;
 
 /**
  * Links de produto de farmácia podem sair do ar quando a loja troca o cadastro:
@@ -104,6 +105,15 @@ export const giftList: { examples: boolean; groups: readonly GiftGroup[] } = {
         { id: "mamadeira", name: "Mamadeira anticólica", total: 2, unit: UNIDADE },
         { id: "chupeta", name: "Chupeta / bico anticólica" },
         { id: "escova-mamadeira", name: "Escova para limpar mamadeira" },
+      ],
+    },
+    {
+      id: "brincar",
+      title: "Brincar e descobrir",
+      items: [
+        { id: "mordedor", name: "Mordedor", note: "Silicone, sem BPA" },
+        { id: "livrinhos", name: "Livrinhos de bebê", note: "De pano, de banho ou com contraste preto e branco", total: 2, unit: LIVRO },
+        { id: "brinquedo-educativo", name: "Brinquedo educativo", note: "Para 0 a 6 meses — chocalho, cores e texturas" },
       ],
     },
     {
