@@ -71,7 +71,8 @@ Sem o banco, a lista aparece mas os botões "Comprei" ficam apagados (não deixa
 - Cada item: `id` (fixo, nunca mude depois de publicar), `name`, `note` (opcional).
 - `total` = quantas unidades precisamos (sem `total` = 1). `unit` = [singular, plural] (pacote/pacotes…).
 - `examples` = produtos do botão "ver exemplos", cada um com links (farmácia ou busca do Google). `examplesNote` = frase no topo da popup.
-- Fraldas: Pampers Premium Care, pacote Jumbo — P 8 · M 12 · G 7 pacotes.
+- Fraldas: Pampers Premium Care, pacote Jumbo — P 8 · M 12 · G 7 pacotes (marca no "ver exemplos").
+- `tab` = nome curto do grupo na barra de categorias (ex.: "Banho" para "Banho e troca").
 - Para acrescentar um item: copie uma linha do grupo, troque o `id` (novo) e o nome.
 
 **Como funciona para o convidado** — cada linha tem 3 colunas: **Faltam** · **Produto** (+ "ver exemplos") · **Comprei**
