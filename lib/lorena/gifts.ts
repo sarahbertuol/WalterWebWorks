@@ -44,6 +44,14 @@ const ex = {
   naturaShampoo: { name: "Natura Mamãe e Bebê · Shampoo", note: "Vendido pela Natura e consultoras", links: [google("Natura Mamãe e Bebê shampoo")] },
   naturaCondicionador: { name: "Natura Mamãe e Bebê · Condicionador", note: "Vendido pela Natura e consultoras", links: [google("Natura Mamãe e Bebê condicionador")] },
   naturaHidratante: { name: "Natura Mamãe e Bebê · Hidratante", note: "Vendido pela Natura e consultoras", links: [google("Natura Mamãe e Bebê hidratante")] },
+  cremerAlgodao: {
+    name: "Cremer · Algodão quadrado bebê, sem perfume",
+    links: [
+      { label: "Drogasil", url: "https://www.drogasil.com.br/algodao-quadrado-bebe-cremer-sem-perfume-200-unidades-1080843.html" },
+      { label: "Droga Raia", url: "https://www.drogaraia.com.br/algodao-quadrado-bebe-cremer-sem-perfume-200-unidades-1080843.html" },
+      { label: "Panvel", url: "https://www.panvel.com/panvel/algodao-quadrado-cremer-100-unidades/p-89375" },
+    ],
+  },
   mustelaShampoo: {
     name: "Mustela · Shampoo Espuma Recém-Nascido",
     links: [
@@ -70,7 +78,6 @@ export const giftList: { examples: boolean; groups: readonly GiftGroup[] } = {
     {
       id: "fraldas",
       title: "Fraldas",
-      note: "Pampers Premium Care · pacote Jumbo, por favor — assim a conta fecha certinho.",
       items: [
         { id: "fralda-p", name: "Fralda tamanho P", total: 8, unit: PACOTE, examples: pampers("P") },
         { id: "fralda-m", name: "Fralda tamanho M", total: 12, unit: PACOTE, examples: pampers("M") },
@@ -78,15 +85,27 @@ export const giftList: { examples: boolean; groups: readonly GiftGroup[] } = {
       ],
     },
     {
+      id: "pano",
+      title: "Fraldas de pano",
+      tab: "De pano",
+      items: [
+        { id: "fralda-boca", name: "Fralda de boca", note: "Limpar boquinha e saliva · 100% algodão, macio e absorvente", total: 12, unit: UNIDADE },
+        { id: "fralda-ombro", name: "Fralda de ombro", note: "Apoiar o bebê ao arrotar · algodão duplo ou tecido fralda", total: 6, unit: UNIDADE },
+        { id: "fralda-pano", name: "Fralda de pano tradicional", note: "Forrar e proteger superfícies · 100% algodão", total: 6, unit: UNIDADE },
+        { id: "toalha-fralda", name: "Toalha fralda", note: "Secar a pele delicada · tecido fralda macio", total: 2, unit: UNIDADE },
+        { id: "cueiro-musselina", name: "Cueiro de musselina", note: "Enrolar o bebê no banho · 100% algodão, musselina leve", total: 2, unit: UNIDADE },
+      ],
+    },
+    {
       id: "banho",
       title: "Banho e troca",
+      tab: "Banho",
       items: [
-        { id: "algodao", name: "Algodão em quadradinhos", note: "Pacote grande", total: 4, unit: PACOTE },
+        { id: "algodao", name: "Algodão em quadradinhos", note: "Pacote grande · Cremer", total: 4, unit: PACOTE, examples: [ex.cremerAlgodao] },
         { id: "garrafa-termica", name: "Garrafa térmica de pressão", note: "Para esquentar a água dos algodões" },
         { id: "lencos", name: "Lenços umedecidos", note: "Sem perfume, linha sensitive", total: 6, unit: PACOTE },
-        { id: "fraldas-pano", name: "Fraldas de pano / boquinhas", note: "Pacote com 5 ou 6", total: 3, unit: PACOTE },
         { id: "toalha", name: "Toalha de banho de algodão", total: 2, unit: UNIDADE },
-        { id: "trocador-portatil", name: "Trocador portátil", note: "Para levar na bolsa" },
+        { id: "trocador-portatil", name: "Trocador portátil", note: "Para levar na bolsa", total: 2, unit: UNIDADE },
         { id: "sabonete", name: "Sabonete líquido de bebê", note: "Hipoalergênico, sem perfume forte", total: 2, unit: FRASCO },
         { id: "shampoo", name: "Shampoo de bebê", note: "Natura ou Mustela", examplesNote: NATURA_OU_MUSTELA, examples: [ex.naturaShampoo, ex.mustelaShampoo] },
         { id: "condicionador", name: "Condicionador de bebê", note: "Natura Mamãe e Bebê", examples: [ex.naturaCondicionador] },
@@ -110,14 +129,14 @@ export const giftList: { examples: boolean; groups: readonly GiftGroup[] } = {
         { id: "chupeta", name: "Chupeta / bico anticólica" },
         { id: "clipe-chupeta", name: "Clipe para bico", note: "Prendedor de chupeta" },
         { id: "escova-mamadeira", name: "Escova para limpar mamadeira" },
-        { id: "babadores", name: "Babadores", total: 4, unit: UNIDADE },
+        { id: "babadores", name: "Babador" },
         { id: "leite-materno", name: "Saquinhos para leite materno", note: "Para congelar o leite", total: 2, unit: CAIXA },
-        { id: "recipiente-leite", name: "Recipiente para guardar leite", note: "Potinhos com tampa, sem BPA" },
       ],
     },
     {
       id: "sono",
       title: "Sono e passeio",
+      tab: "Sono",
       items: [
         { id: "saco-dormir", name: "Saco de dormir ou cueiro", note: "Algodão, para recém-nascido" },
         { id: "manta", name: "Manta leve de algodão" },
@@ -130,8 +149,8 @@ export const giftList: { examples: boolean; groups: readonly GiftGroup[] } = {
       tab: "Brincar",
       items: [
         { id: "mordedor", name: "Mordedor", note: "Silicone, sem BPA" },
-        { id: "livrinhos", name: "Livrinhos de bebê", note: "De pano, de banho ou com contraste preto e branco", total: 2, unit: LIVRO },
-        { id: "brinquedo-educativo", name: "Brinquedo educativo", note: "Para 0 a 6 meses — chocalho, cores e texturas" },
+        { id: "livrinhos", name: "Livrinhos de bebê", total: 2, unit: LIVRO },
+        { id: "brinquedo-educativo", name: "Brinquedo educativo", note: "Para 0 a 6 meses — chocalho, cores e texturas", total: 3, unit: UNIDADE },
         { id: "tapete-atividades", name: "Tapete de atividades", note: "Com arco de brinquedos (ginásio)" },
         { id: "mobile", name: "Móbile para o berço" },
         { id: "chocalho", name: "Chocalho", total: 2, unit: UNIDADE },
@@ -140,8 +159,10 @@ export const giftList: { examples: boolean; groups: readonly GiftGroup[] } = {
     {
       id: "mamae",
       title: "Para a mamãe",
+      tab: "Mamãe",
       items: [
         { id: "garrafa-agua", name: "Garrafa de água com canudo", note: "Cerca de 1 litro" },
+        { id: "pijama-amamentacao", name: "Pijama de amamentação", note: "Para o pós-parto" },
         { id: "lanolina", name: "Pomada de lanolina para mamilos", note: "Tipo Lansinoh" },
         { id: "absorvente-seios", name: "Absorvente para seios", total: 2, unit: CAIXA },
         { id: "absorvente-pos-parto", name: "Absorvente pós-parto", note: "Noturno", total: 3, unit: PACOTE },
